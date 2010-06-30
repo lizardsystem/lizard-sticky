@@ -14,6 +14,7 @@ long_description = '\n\n'.join([
 install_requires = [
     'Django',
     'django-staticfiles',
+    'lizard-map',
     ],
 
 tests_require = [
@@ -41,4 +42,7 @@ setup(name='lizard-sticky',
       entry_points={
           'console_scripts': [
           ]},
+          'lizard_map.adapter_class': [
+            'adapter_sticky = lizard_map.layers:WorkspaceItemAdapterSticky',
+            ]
       )
