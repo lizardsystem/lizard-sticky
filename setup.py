@@ -41,8 +41,9 @@ setup(name='lizard-sticky',
       extras_require = {'test': tests_require},
       entry_points={
           'console_scripts': [
-          ]},
+          ],
           'lizard_map.adapter_class': [
-            'adapter_sticky = lizard_map.layers:WorkspaceItemAdapterSticky',
+            'adapter_sticky = lizard_sticky.layers:WorkspaceItemAdapterSticky',
             ]
+          }
       )

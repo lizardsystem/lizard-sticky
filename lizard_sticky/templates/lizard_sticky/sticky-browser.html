@@ -1,0 +1,53 @@
+{# Stickies screen #}
+{% extends "lizard_map/wms.html" %}
+{% load workspaces %}
+
+{% block subtitle %} KRW gegevens {% endblock %}
+
+{% block breadcrumbs %}
+<a href="{% url homepage %}">home</a>
+&rarr;
+<a href="{% url analysis_start %}" class="lizard-map-link">analyse</a>
+&rarr;
+<a href="{% url sticky-browser %}" class="lizard-map-link">geeltjes</a>
+{% endblock %}
+
+{% block sidebar %}
+<div class="sidebarbox sidebarbox-stretched">
+  <h2>Geeltjes</h2>
+  <ul>
+    <li>navigatie</li>
+    <li>nieuw geeltje plaatsen</li>
+  </ul>
+  <h2>Geeltjes bladeren</h2>
+  <ul class="automatic-tree filetree">
+    <li class="workspace-acceptable file"
+        data-name="Alle geeltjes"
+        data-adapter-class="adapter_sticky"
+        data-adapter-layer-json='{}'>
+      <span class="file">alle geeltjes</li>
+    <li>
+      <span class="folder">op tags</span>
+      <ul>
+        {% for tag in tags %}
+        <li class="workspace-acceptable file"
+            data-name="Geeltjes tag {{ tag }}"
+            data-adapter-class="adapter_sticky"
+            data-adapter-layer-json='{"tag": "{{ tag.slug }}"}'>
+          <span class="file">{{ tag }}</span>
+        </li>
+        {% empty %}
+        <li><span class="file">geen tags</span></li>
+        {% endfor %}
+      </ul>
+    </li>
+  </ul>
+</div>
+
+{% for workspace in workspaces.user %}
+  {% workspace workspace %}
+{% empty %}
+No workspace
+{% endfor %}
+
+{% endblock %}
