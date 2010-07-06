@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.db import models
+from django.contrib.gis.db import models
 
 class Tag(models.Model):
     slug = models.SlugField()
@@ -20,8 +20,10 @@ class Sticky(models.Model):
     attachment = models.ImageField(upload_to='lizard-sticky', blank=True, null=True)
 
     # geo stuff
-    google_x = models.FloatField()
-    google_y = models.FloatField()
+    # google_x = models.FloatField()
+    # google_y = models.FloatField()
+    geom = models.PointField()  # srid 4326
+    objects = models.GeoManager()
 
     def __unicode__(self):
         return u'%s' % self.title

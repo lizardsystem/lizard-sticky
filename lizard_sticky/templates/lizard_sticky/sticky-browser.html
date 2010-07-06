@@ -13,12 +13,14 @@
 {% endblock %}
 
 {% block sidebar %}
-<div class="sidebarbox sidebarbox-stretched">
+<div class="sidebarbox">
   <h2>Geeltjes</h2>
   <ul>
     <li>navigatie</li>
     <li>nieuw geeltje plaatsen</li>
   </ul>
+</div>
+<div class="sidebarbox sidebarbox-stretched">
   <h2>Geeltjes bladeren</h2>
   <ul class="automatic-tree filetree">
     <li class="workspace-acceptable file"
@@ -33,7 +35,7 @@
         <li class="workspace-acceptable file"
             data-name="Geeltjes tag {{ tag }}"
             data-adapter-class="adapter_sticky"
-            data-adapter-layer-json='{"tag": "{{ tag.slug }}"}'>
+            data-adapter-layer-json='{"tags": ["{{ tag.slug }}"]}'>
           <span class="file">{{ tag }}</span>
         </li>
         {% empty %}
