@@ -7,6 +7,7 @@ import mapnik
 from django.conf import settings
 from django.contrib.gis.geos import Point
 from django.contrib.gis.measure import D
+from django.shortcuts import get_object_or_404
 
 from lizard_map import adapter
 from lizard_map import coordinates
@@ -127,18 +128,27 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
         """
         # wgs84_x, wgs84_y = google_to_wgs84(google_x, google_y)
         pnt = Point(google_x, google_y, srid=900913)
-        stickies = Sticky.objects.filter(geom__distance_lte=(pnt, D(km=1)))
+        stickies = Sticky.objects.filter(geom__distance_lte=(pnt, D(m=radius*0.5)))
 
-        print stickies
         result = [{'distance': 0.0,
                    'name': '%s (%s)' % (sticky.title, sticky.reporter),
                    'shortname': str(sticky.title),
+                   'template': 'lizard_sticky/popup_sticky.html',
+                   'sticky': sticky,  # specific for popup_sticky template
                    'google_coords': wgs84_to_google(sticky.geom.x, sticky.geom.y),
                    'workspace_item': self.workspace_item,
                    'identifier': {'sticky_id': sticky.id},
                    } for sticky in stickies]
         return result
 
-    def location(self):
-        pass
-        
+    def location(self, sticky_id):
+        sticky = get_object_or_404(Sticky, pk=sticky_id)
+        return {
+            'name': '%s (%s)' % (sticky.title, sticky.reporter),
+            'shortname': str(sticky.title),
+            'workspace_item': self.workspace_item,
+            'identifier': {'sticky_id': sticky.id},
+            'google_coords': wgs84_to_google(sticky.geom.x, sticky.geom.y),
+            'template': 'lizard_sticky/popup_sticky.html',
+            'sticky': sticky,  # specific for popup_sticky template
+            }

@@ -24,7 +24,7 @@
   <h2>Geeltjes bladeren</h2>
   <ul class="automatic-tree filetree">
     <li class="workspace-acceptable file"
-        data-name="Alle geeltjes"
+        data-name="Geeltjes"
         data-adapter-class="adapter_sticky"
         data-adapter-layer-json='{}'>
       <span class="file">alle geeltjes</li>
@@ -33,7 +33,7 @@
       <ul>
         {% for tag in tags %}
         <li class="workspace-acceptable file"
-            data-name="Geeltjes tag {{ tag }}"
+            data-name="Geeltjes ({{ tag }})"
             data-adapter-class="adapter_sticky"
             data-adapter-layer-json='{"tags": ["{{ tag.slug }}"]}'>
           <span class="file">{{ tag }}</span>

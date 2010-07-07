@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.contrib.gis.db import models
 
@@ -13,6 +15,7 @@ class Sticky(models.Model):
     """
 
     owner = models.ForeignKey(User, blank=True, null=True)
+    datetime = models.DateTimeField(default=datetime.datetime.now())
     reporter = models.CharField(max_length=80)
     title = models.CharField(max_length=80)
     description = models.TextField()
