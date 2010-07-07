@@ -20,9 +20,7 @@ def sticky_browser(request):
         'lizard_sticky/sticky-browser.html',
         {'date_range_form': date_range_form,
          'workspaces': workspaces,
-         'javascript_click_handler': 'popup_click_handler',
+         'javascript_click_handler': 'sticky_popup_click_handler',
          'tags': Tag.objects.all(),
          },
         context_instance=RequestContext(request))
-
-

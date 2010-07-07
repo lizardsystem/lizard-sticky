@@ -17,6 +17,10 @@ from lizard_map.models import ICON_ORIGINALS
 from lizard_map.symbol_manager import SymbolManager
 from lizard_sticky.models import Sticky
 
+ICON_STYLE = {'icon': 'sticky.png',
+              'mask': ('sticky_mask.png', ),
+              'color': (1, 1, 0, 0)}
+
 class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
     def __init__(self, *args, **kwargs):
         """
@@ -36,15 +40,12 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
         symbol_manager = SymbolManager(
             ICON_ORIGINALS,
             os.path.join(settings.MEDIA_ROOT, 'generated_icons'))
-        icon_style = {'icon': 'meetpuntPeil.png',
-                      'mask': ('meetpuntPeil_mask.png', ),
-                      'color': (1, 1, 0, 0)}
         output_filename = symbol_manager.get_symbol_transformed(
-            icon_style['icon'], **icon_style)
+            ICON_STYLE['icon'], **ICON_STYLE)
         output_filename_abs = os.path.join(
             settings.MEDIA_ROOT, 'generated_icons', output_filename)
         # use filename in mapnik pointsymbolizer
-        point_looks = mapnik.PointSymbolizer(output_filename_abs, 'png', 32, 32)
+        point_looks = mapnik.PointSymbolizer(output_filename_abs, 'png', 16, 16)
         point_looks.allow_overlap = True
         layout_rule = mapnik.Rule()
         layout_rule.symbols.append(point_looks)
@@ -152,3 +153,10 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
             'template': 'lizard_sticky/popup_sticky.html',
             'sticky': sticky,  # specific for popup_sticky template
             }
+
+    def symbol_url(self, identifier=None, start_date=None, end_date=None):
+        return super(WorkspaceItemAdapterSticky, self).symbol_url(
+            identifier=identifier,
+            start_date=start_date,
+            end_date=end_date,
+            icon_style=ICON_STYLE)

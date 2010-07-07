@@ -2,7 +2,7 @@
 {% extends "lizard_map/wms.html" %}
 {% load workspaces %}
 
-{% block subtitle %} KRW gegevens {% endblock %}
+{% block subtitle %} Geeltjes {% endblock %}
 
 {% block breadcrumbs %}
 <a href="{% url homepage %}">home</a>
@@ -12,12 +12,19 @@
 <a href="{% url sticky-browser %}" class="lizard-map-link">geeltjes</a>
 {% endblock %}
 
+{% block javascript %}
+{{ block.super }}
+<script type="text/javascript"
+        src="{{ STATIC_URL }}lizard_sticky/lizard_sticky.js"></script>
+{% endblock javascript %}
+
 {% block sidebar %}
 <div class="sidebarbox">
   <h2>Geeltjes</h2>
-  <ul>
-    <li>navigatie</li>
-    <li>nieuw geeltje plaatsen</li>
+  <form id="sticky">
+    <input id="sticky_navigate" type="radio" name="sticky" value="sticky_navigate" checked>Navigeren</input>
+    <input id="sticky_add" type="radio" name="sticky" value="add_sticky">Plak geeltje</input>
+  </form>
   </ul>
 </div>
 <div class="sidebarbox sidebarbox-stretched">
@@ -45,6 +52,18 @@
     </li>
   </ul>
 </div>
+<!-- TODO: mooie popup div>
+  <div class="popup hide"
+     id="add-sticky">
+    <h1>Geeltje</h1>
+    <div>
+      <form action="{% url lizard_map.set_date_range %}"
+            method="post">
+        <p><input type="submit" value="Plak geeltje" /></p>
+      </form>
+    </div>
+  </div>
+</div-->
 
 {% for workspace in workspaces.user %}
   {% workspace workspace %}
