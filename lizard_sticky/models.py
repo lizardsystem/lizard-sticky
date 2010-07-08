@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 from django.contrib.gis.db import models
 
 class Tag(models.Model):
+    class Meta:
+        ordering = ['slug']
+
     slug = models.SlugField()
 
     def __unicode__(self):
