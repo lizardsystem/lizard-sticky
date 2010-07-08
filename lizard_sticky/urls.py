@@ -7,6 +7,9 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
+    url(r'^add_sticky/$',
+        'lizard_sticky.views.add_sticky',
+        name='lizard_sticky.add_sticky'),
     (r'^admin/', include(admin.site.urls)),
     )
 

@@ -31,3 +31,11 @@ class Sticky(models.Model):
     def __unicode__(self):
         return u'%s' % self.title
     
+    def add_tags(self, slugs):
+        """add tags to sticky
+
+        tags is a list of strings
+        """
+        for slug in slugs:
+            tag, _ = Tag.objects.get_or_create(slug=slug.lower())
+            self.tags.add(tag)

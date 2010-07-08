@@ -12,14 +12,21 @@
 <a href="{% url sticky-browser %}" class="lizard-map-link">geeltjes</a>
 {% endblock %}
 
-{% block javascript %}
-{{ block.super }}
+{% block map-javascript-global %}
+{# pure javascript code that must be inserted in the map-javascript block #}
+    var pointLayer, pointController;
+{% endblock %}
+
+{% block head-extras %}
+{# this block must come after the map-javascript block, so we use head-extras #}
 <script type="text/javascript"
         src="{{ STATIC_URL }}lizard_sticky/lizard_sticky.js"></script>
-{% endblock javascript %}
+{% endblock %}
 
 {% block sidebar %}
-<div class="sidebarbox">
+<div id="sticky" 
+     data-url-lizard-sticky-add="{% url lizard_sticky.add_sticky %}" 
+     class="sidebarbox">
   <h2>Geeltjes</h2>
   <form id="sticky">
     <input id="sticky_navigate" type="radio" name="sticky" value="sticky_navigate" checked>Navigeren</input>
@@ -27,15 +34,16 @@
   </form>
   </ul>
 </div>
-<div class="sidebarbox sidebarbox-stretched">
+<div id="sticky-browser"
+     class="sidebarbox sidebarbox-stretched">
   <h2>Geeltjes bladeren</h2>
-  <ul class="automatic-tree filetree">
-    <li class="workspace-acceptable file"
+  <ul id="sticky-browser-list" class="automatic-tree filetree">
+    <li class="workspace-acceptable file sticky-browser-item"
         data-name="Geeltjes"
         data-adapter-class="adapter_sticky"
         data-adapter-layer-json='{}'>
       <span class="file">alle geeltjes</li>
-    <li>
+    <li class="sticky-browser-item">
       <span class="folder">op tags</span>
       <ul>
         {% for tag in tags %}
