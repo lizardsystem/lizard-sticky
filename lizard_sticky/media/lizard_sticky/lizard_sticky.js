@@ -90,7 +90,7 @@ function sticky_add_handler(event) {
     // show popup
     html = 
         '<strong>Nieuw geeltje</strong>' +
-        '<form id="add-sticky" action="' + url + '" method="post">' +
+        '<form id="add-sticky" style="background-color: lightyellow;" action="' + url + '" method="post">' +
         '<ol class="forms">' +
         '<li><label for="reporter" id="reporter">Naam</label><input id="sticky-reporter" type="text" name="reporter" /></li>' + 
         '<li><label for="title" id="title">Onderwerp</label><input id="sticky-title" type="text" name="title" /></li>' + 

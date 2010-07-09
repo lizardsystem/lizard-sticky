@@ -135,7 +135,7 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
                    'name': '%s (%s)' % (sticky.title, sticky.reporter),
                    'shortname': str(sticky.title),
                    'template': 'lizard_sticky/popup_sticky.html',
-                   'sticky': sticky,  # specific for popup_sticky template
+                   'object': sticky,
                    'google_coords': wgs84_to_google(sticky.geom.x, sticky.geom.y),
                    'workspace_item': self.workspace_item,
                    'identifier': {'sticky_id': sticky.id},
@@ -151,7 +151,7 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
             'identifier': {'sticky_id': sticky.id},
             'google_coords': wgs84_to_google(sticky.geom.x, sticky.geom.y),
             'template': 'lizard_sticky/popup_sticky.html',
-            'sticky': sticky,  # specific for popup_sticky template
+            'object': sticky,
             }
 
     def symbol_url(self, identifier=None, start_date=None, end_date=None):
