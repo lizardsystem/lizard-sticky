@@ -8,6 +8,7 @@ from django.conf import settings
 from django.contrib.gis.geos import Point
 from django.contrib.gis.measure import D
 from django.shortcuts import get_object_or_404
+from django.template.loader import render_to_string
 
 from lizard_map import adapter
 from lizard_map import coordinates
@@ -53,7 +54,7 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
         point_style.rules.append(layout_rule)
 
         return point_style
-        
+
     def layer(self, layer_ids=None):
         """Return a layer with all stickies or stickies with selected
         tags
@@ -134,7 +135,6 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
         result = [{'distance': 0.0,
                    'name': '%s (%s)' % (sticky.title, sticky.reporter),
                    'shortname': str(sticky.title),
-                   'template': 'lizard_sticky/popup_sticky.html',
                    'object': sticky,
                    'google_coords': wgs84_to_google(sticky.geom.x, sticky.geom.y),
                    'workspace_item': self.workspace_item,
@@ -143,14 +143,19 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
         return result
 
     def location(self, sticky_id):
+        """
+        returns location dict.
+
+        requires identifier_json
+        """
         sticky = get_object_or_404(Sticky, pk=sticky_id)
+        identifier = {'sticky_id': sticky.id}
         return {
             'name': '%s (%s)' % (sticky.title, sticky.reporter),
             'shortname': str(sticky.title),
             'workspace_item': self.workspace_item,
-            'identifier': {'sticky_id': sticky.id},
+            'identifier': identifier,
             'google_coords': wgs84_to_google(sticky.geom.x, sticky.geom.y),
-            'template': 'lizard_sticky/popup_sticky.html',
             'object': sticky,
             }
 
@@ -160,3 +165,15 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
             start_date=start_date,
             end_date=end_date,
             icon_style=ICON_STYLE)
+
+    def html(self, identifiers, add_snippet=False):
+        """
+        Renders stickies
+        """
+        display_group = [self.location(**identifier) for identifier in identifiers]
+        return render_to_string(
+            'lizard_sticky/popup_sticky.html',
+            {'title': 'Geeltjes',
+             'display_group': display_group,
+             'add_snippet': add_snippet}
+            )
