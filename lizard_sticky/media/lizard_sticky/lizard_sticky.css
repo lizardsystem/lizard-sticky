@@ -1,0 +1,9 @@
+ol.forms label {
+    cursor:pointer;
+    display:block;
+    float:left;
+    line-height:1.5em;
+    padding-right:1%;
+    text-align:right;
+    width:10%;
+}

@@ -1,0 +1,25 @@
+{% load workspaces %}
+{# header #}
+<div><img src="{{ symbol_url }}"/><strong>{{ title }}</strong></div>
+{# body #}
+<div style="width: 100%;">
+{% for display_object in display_group %}
+{{ display_object.name }}
+{% with display_object.header as header %}
+{% if add_snippet %}<a href=""
+class="add-snippet ss_chart_line_add ss_sprite"
+data-workspace-id="{{ display_object.workspace_item.workspace.id }}"
+data-workspace-item-id="{{ display_object.workspace_item.id }}"
+data-item-identifier='{{ display_object.identifier|json_escaped }}'
+data-item-shortname="{{ display_object.shortname }}"
+data-item-name="{{ header.name }}">Voeg toe aan collage</a>{% endif %}
+{% endwith %}
+<label>
+<ol class="forms">
+<li><label for="reporter">Naam</label><input type="text" name="reporter" value="{{ display_object.object.reporter }}" readonly /></li>
+<li><label for="title">Onderwerp</label><input type="text" name="title" value="{{ display_object.object.title }}" readonly /></li>
+<li><label for="description">Beschrijving</label><input type="text" name="description" value="{{ display_object.object.description }}" readonly /></li>
+<li><label for="tags">Tags</label><input type="text" name="tags" value="{% for tag in display_object.object.tags.all %}{{ tag.slug }} {% endfor %}" readonly /></li>
+</ol>
+{% endfor %}
+</div>
