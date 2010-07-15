@@ -2,7 +2,7 @@ Changelog of lizard-sticky
 ===================================================
 
 
-0.1 (unreleased)
+0.1 (2010-07-15)
 ----------------
 
 - Tags can be used as filters on sticky layer.
