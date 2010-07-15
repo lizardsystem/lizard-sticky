@@ -10,7 +10,7 @@ from lizard_map.workspace import WorkspaceManager
 from lizard_sticky.models import Sticky
 from lizard_sticky.models import Tag
 
-def sticky_browser(request):
+def sticky_browser(request, template=None):
     """Show sticky browser.
 
     Automatically makes new workspace if not yet available
@@ -20,8 +20,10 @@ def sticky_browser(request):
     workspaces = workspace_manager.load_or_create()
     date_range_form = DateRangeForm(
         current_start_end_dates(request, for_form=True))
+    if template is None:
+        template = 'lizard_sticky/sticky-browser.html'
     return render_to_response(
-        'lizard_sticky/sticky-browser.html',
+        template,
         {'date_range_form': date_range_form,
          'workspaces': workspaces,
          'javascript_click_handler': 'sticky_popup_click_handler',
@@ -49,8 +51,8 @@ def add_sticky(request):
     geom = Point(wgs84_x, wgs84_y)
     tags = request.POST.get("tags", "")
 
-    sticky = Sticky(reporter=reporter, 
-                    title=title, 
+    sticky = Sticky(reporter=reporter,
+                    title=title,
                     description=description,
                     geom=geom)
     sticky.save()

@@ -24,10 +24,10 @@
 {% endblock %}
 
 {% block sidebar %}
-<div id="sticky" 
-     data-url-lizard-sticky-add="{% url lizard_sticky.add_sticky %}" 
+<div id="sticky"
+     data-url-lizard-sticky-add="{% url lizard_sticky.add_sticky %}"
      class="sidebarbox">
-  <h2>Geeltjes</h2>
+  <h2>Geeltjes{% block linkback %}{% endblock %}</h2>
   <form id="sticky">
     <input id="sticky_navigate" type="radio" name="sticky" value="sticky_navigate" checked>Navigeren</input>
     <input id="sticky_add" type="radio" name="sticky" value="add_sticky">Plak geeltje</input>
