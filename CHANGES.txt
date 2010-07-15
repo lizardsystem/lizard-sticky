@@ -5,4 +5,6 @@ Changelog of lizard-sticky
 0.1 (unreleased)
 ----------------
 
-- Initial library skeleton created by thaskel.  [your name]
+- Tags can be used as filters on sticky layer.
+- Navigate through stickies and put new stickies using the map.
+- Initial library skeleton created by nensskel.  [Jack]
