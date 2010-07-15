@@ -142,7 +142,7 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
                    } for sticky in stickies]
         return result
 
-    def location(self, sticky_id):
+    def location(self, sticky_id, layout=None):
         """
         returns location dict.
 
