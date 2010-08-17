@@ -55,7 +55,7 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
 
         return point_style
 
-    def layer(self, layer_ids=None):
+    def layer(self, layer_ids=None, request=None):
         """Return a layer with all stickies or stickies with selected
         tags
         """
@@ -123,6 +123,16 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
         layers = [layer, ]
         return layers, styles
 
+    def values(self, identifier, start_date, end_date):
+        """Return values in list of dictionaries (datetime, value, unit)
+        """
+
+        stickies = Sticky.objects.filter(datetime__gte=start_date,
+                                         datetime__lte=end_date)
+        return [{'datetime': sticky.datetime,
+                 'value': sticky.description,
+                 'unit': ''} for sticky in stickies]
+
     def search(self, google_x, google_y, radius=None):
         """
         returns a list of dicts with keys distance, name, shortname,
@@ -166,14 +176,20 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
             end_date=end_date,
             icon_style=ICON_STYLE)
 
-    def html(self, identifiers, add_snippet=False):
+    def html(self, snippet_group=None, identifiers=None, layout_options=None):
         """
         Renders stickies
         """
+        if snippet_group:
+            snippets = snippet_group.snippets.all()
+            identifiers = [snippet.identifier for snippet in snippets]
         display_group = [self.location(**identifier) for identifier in identifiers]
+        add_snippet = False
+        if layout_options and 'add_snippet' in layout_options:
+            add_snippet = layout_options['add_snippet']
         return render_to_string(
             'lizard_sticky/popup_sticky.html',
-            {'title': 'Geeltjes',
-             'display_group': display_group,
-             'add_snippet': add_snippet}
+            {'display_group': display_group,
+             'add_snippet': add_snippet,
+             'symbol_url': self.symbol_url()}
             )

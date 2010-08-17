@@ -47,7 +47,7 @@ function save_sticky() {
                 pointLayer.removeFeatures(old_feats);
                 pointLayer.destroyFeatures(old_feats);
                 // update all layers
-                updateLayers(); 
+                updateLayers();
                 // TODO: update left menu
                 //$("#sticky-browser-list").load("./ .sticky-browser-item");
                 //setUpTree();
@@ -88,14 +88,14 @@ function sticky_add_handler(event) {
     y = feature.geometry.y;
 
     // show popup
-    html = 
+    html =
         '<strong>Nieuw geeltje</strong>' +
         '<form id="add-sticky" style="background-color: lightyellow;" action="' + url + '" method="post">' +
         '<ol class="forms">' +
-        '<li><label for="reporter" id="reporter">Naam</label><input id="sticky-reporter" type="text" name="reporter" /></li>' + 
-        '<li><label for="title" id="title">Onderwerp</label><input id="sticky-title" type="text" name="title" /></li>' + 
-        '<li><label for="description" id="description">Beschrijving</label><input id="sticky-description" type="text" name="description"/></li>' + 
-        '<li><label for="tags">Tags</label><input id="sticky-tags" type="text" name="tags" /></li>' + 
+        '<li><label for="reporter" id="reporter">Naam</label><input id="sticky-reporter" type="text" name="reporter" /></li>' +
+        '<li><label for="title" id="title">Onderwerp</label><input id="sticky-title" type="text" name="title" /></li>' +
+        '<li><label for="description" id="description">Beschrijving</label><input id="sticky-description" type="text" name="description"/></li>' +
+        '<li><label for="tags">Kernwoorden</label><input id="sticky-tags" type="text" name="tags" /></li>' +
         '<button id="submit-sticky" type="button">Sla op</button>' +
         '</ol>' +
         '<input id="sticky-x" type="hidden" name="x" value="' + x + '" />' +
@@ -111,7 +111,7 @@ function sticky_add_handler(event) {
     // make sure that when the window is closed, the object is removed as well
     $(".olPopupCloseBox").bind("click", function () {
         $(this).parent().parent().remove();
-    });                          
+    });
 }
 
 function init_sticky() {
