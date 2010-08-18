@@ -1,0 +1,38 @@
+{% extends "lizard_help/base.html" %}
+
+{% block sidebar-extra %}
+<div class="sidebarbox">
+<h2>Lizard-sticky</h2>
+<ul>
+Spring naar het onderwerp:
+<li><a href="#intro">Intro</a></li>
+<li><a href="#navigate">Navigeren</a></li>
+<li><a href="#stick">Geeltje plakken</a></li>
+</ul>
+</div>
+{% endblock %}
+
+{% block helptext %}
+<h2>Lizard-sticky</h2>
+
+<h3><a name="intro">Intro</a></h3>
+<p>
+Lizard-sticky is de geeltjes applicatie van LizardWeb. Met behulp van Lizard-map kan er een geeltje geplakt worden op een willekeurige locatie op de kaart. Ook kunnen kaartlagen op basis van kernwoorden worden gegenereerd met de beschikbare geeltjes.
+</p>
+<img src="{{ STATIC_URL }}lizard_sticky/help/sticky-popup.png" width="20%"/>
+
+<h3><a name="navigate">Navigeren</a></h3>
+<p>
+Klik op "Navigeren". Selecteer vervolgens de geeltjes onder "Geeltjes bladeren". Op de kaart verschijnen nu alle relevante geeltjes. De selectie is ook te slepen naar de workspace.
+</p>
+<img src="{{ STATIC_URL }}lizard_sticky/help/sticky-navigate.png" width="20%"/><br />
+<img src="{{ STATIC_URL }}lizard_sticky/help/sticky-tags.png" width="20%"/>
+
+<h3><a name="stick">Geeltje plakken</a></h3>
+<p>
+Klik op "Plak geeltje". Klik vervolgens op de kaart op de juiste locatie. Vul het formulier in en druk op "Sla op". Als het geeltje niet direct zichtbaar is, klik dan op "alle geeltjes" onder "Geeltjes bladeren".
+</p>
+<img src="{{ STATIC_URL }}lizard_sticky/help/sticky-stick.png" width="20%"/><br />
+
+<img src="{{ STATIC_URL }}lizard_sticky/help/sticky-form.png" width="20%"/><br />
+{% endblock %}
