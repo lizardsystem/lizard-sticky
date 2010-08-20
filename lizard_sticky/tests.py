@@ -1,16 +1,9 @@
-import doctest
+from django.test import TestCase
+
+import lizard_sticky.models
 
 
-def suite():
-    """Return test suite
+class ModelTest(TestCase):
 
-    This method is automatically called by django's test mechanism.
-
-    """
-    return doctest.DocFileSuite(
-        'USAGE.txt',
-        #'TODO_several_more_tests.txt',
-        module_relative=True,
-        optionflags=(doctest.NORMALIZE_WHITESPACE|
-                     doctest.ELLIPSIS|
-                     doctest.REPORT_NDIFF))
+    def test_smoke(self):
+        self.assertTrue(lizard_sticky.models)

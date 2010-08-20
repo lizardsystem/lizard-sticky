@@ -1,9 +1,0 @@
-Usage of lizard-sticky
-=============================================
-
-
-Usage:
-
-    >>> import lizard_sticky
-
-Show how to import the main classes and how to use them.
