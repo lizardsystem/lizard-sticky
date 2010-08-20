@@ -15,6 +15,7 @@ install_requires = [
     'Django',
     'django-staticfiles',
     'lizard-map',
+    'django-nose',
     ],
 
 tests_require = [

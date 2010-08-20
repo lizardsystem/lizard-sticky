@@ -6,6 +6,7 @@ SITE_ID = 1
 INSTALLED_APPS = [
     'lizard_sticky',
     'staticfiles',
+    'django_nose',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -14,6 +15,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     ]
 ROOT_URLCONF = 'lizard_sticky.urls'
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 # Used for django-staticfiles
 STATIC_URL = '/static_media/'
