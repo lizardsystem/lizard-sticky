@@ -26,6 +26,7 @@ def sticky_browser(request, template=None):
         template,
         {'date_range_form': date_range_form,
          'workspaces': workspaces,
+         'javascript_hover_handler': 'popup_hover_handler',
          'javascript_click_handler': 'sticky_popup_click_handler',
          'tags': Tag.objects.all(),
          },
