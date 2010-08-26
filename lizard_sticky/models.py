@@ -3,6 +3,7 @@ import datetime
 from django.contrib.auth.models import User
 from django.contrib.gis.db import models
 
+
 class Tag(models.Model):
     class Meta:
         ordering = ['slug']
@@ -11,6 +12,7 @@ class Tag(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.slug
+
 
 class Sticky(models.Model):
     """
@@ -23,7 +25,9 @@ class Sticky(models.Model):
     title = models.CharField(max_length=80)
     description = models.TextField()
     tags = models.ManyToManyField(Tag, blank=True, null=True)
-    attachment = models.ImageField(upload_to='lizard-sticky', blank=True, null=True)
+    attachment = models.ImageField(upload_to='lizard-sticky',
+                                   blank=True,
+                                   null=True)
 
     # geo stuff
     # google_x = models.FloatField()
@@ -33,7 +37,7 @@ class Sticky(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.title
-    
+
     def add_tags(self, slugs):
         """add tags to sticky
 

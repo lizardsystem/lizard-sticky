@@ -10,6 +10,7 @@ from lizard_map.workspace import WorkspaceManager
 from lizard_sticky.models import Sticky
 from lizard_sticky.models import Tag
 
+
 def sticky_browser(request, template=None):
     """Show sticky browser.
 
@@ -31,6 +32,7 @@ def sticky_browser(request, template=None):
          'tags': Tag.objects.all(),
          },
         context_instance=RequestContext(request))
+
 
 def add_sticky(request):
     """
@@ -59,4 +61,3 @@ def add_sticky(request):
     sticky.save()
     sticky.add_tags(tags.split(" "))
     return HttpResponse("")
-

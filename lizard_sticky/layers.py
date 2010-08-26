@@ -10,7 +10,6 @@ from django.contrib.gis.measure import D
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 
-from lizard_map import adapter
 from lizard_map import coordinates
 from lizard_map import workspace
 from lizard_map.coordinates import wgs84_to_google
@@ -21,6 +20,7 @@ from lizard_sticky.models import Sticky
 ICON_STYLE = {'icon': 'sticky.png',
               'mask': ('sticky_mask.png', ),
               'color': (1, 1, 0, 0)}
+
 
 class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
     def __init__(self, *args, **kwargs):
@@ -46,7 +46,8 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
         output_filename_abs = os.path.join(
             settings.MEDIA_ROOT, 'generated_icons', output_filename)
         # use filename in mapnik pointsymbolizer
-        point_looks = mapnik.PointSymbolizer(output_filename_abs, 'png', 16, 16)
+        point_looks = mapnik.PointSymbolizer(output_filename_abs, 'png',
+                                             16, 16)
         point_looks.allow_overlap = True
         layout_rule = mapnik.Rule()
         layout_rule.symbols.append(point_looks)
@@ -76,14 +77,14 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
             # new database settings
             db_settings = settings.DATABASES['default']
 
-        if db_settings['ENGINE'] == 'sqlite3' or \
-                db_settings['ENGINE'] == 'django.contrib.gis.db.backends.spatialite':
+        if (db_settings['ENGINE'] == 'sqlite3' or
+            db_settings['ENGINE'] == 'django.contrib.gis.db.backends.spatialite'):
             datasource = mapnik.SQLite
             options = {'file': settings.DATABASES['default']['NAME']}
             query = (
                 'select geom from lizard_sticky_sticky')
-        elif db_settings == 'postgresql_psycopg2' or \
-                db_settings['ENGINE'] == 'django.contrib.gis.db.backends.postgis':
+        elif (db_settings == 'postgresql_psycopg2' or
+              db_settings['ENGINE'] == 'django.contrib.gis.db.backends.postgis'):
             datasource = mapnik.PostGIS
             options = {'host': db_settings['HOST'],
                        'user': db_settings['USER'],
@@ -100,7 +101,7 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
                     '  sticky_tags.tag_id = tag.id and '
                     '  (%s) '
                     ') lizard_sticky_sticky' % \
-                    ' or '.join(['tag.slug = \'%s\'' % tag for tag in self.tags])
+                    ' or '.join(['tag.slug = \'%s\'' % tag for tag in self.tags]),
                     )
             else:
                 query = (
@@ -140,13 +141,15 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
         """
         # wgs84_x, wgs84_y = google_to_wgs84(google_x, google_y)
         pnt = Point(google_x, google_y, srid=900913)
-        stickies = Sticky.objects.filter(geom__distance_lte=(pnt, D(m=radius*0.5)))
+        stickies = Sticky.objects.filter(geom__distance_lte=(
+                pnt, D(m=radius * 0.5)))
 
         result = [{'distance': 0.0,
                    'name': '%s (%s)' % (sticky.title, sticky.reporter),
                    'shortname': str(sticky.title),
                    'object': sticky,
-                   'google_coords': wgs84_to_google(sticky.geom.x, sticky.geom.y),
+                   'google_coords': wgs84_to_google(sticky.geom.x,
+                                                    sticky.geom.y),
                    'workspace_item': self.workspace_item,
                    'identifier': {'sticky_id': sticky.id},
                    } for sticky in stickies]
@@ -191,5 +194,5 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
             'lizard_sticky/popup_sticky.html',
             {'display_group': display_group,
              'add_snippet': add_snippet,
-             'symbol_url': self.symbol_url()}
+             'symbol_url': self.symbol_url()},
             )
