@@ -1,10 +1,14 @@
-// javascript for lizard_sticky
-// popup_click_handler
+// jslint configuration; btw: don't put a space before 'jslint' below.
+/*jslint browser: true */
+/*global $, OpenLayers, window, popup_click_handler, updateLayers, map */
+
+var pointLayer, pointController;
 
 
 function sticky_popup_click_handler(x, y, map) {
+    var checked_button;
     // get checked radiobutton
-    var checked_button = $("form#sticky input:radio:checked");
+    checked_button = $("form#sticky input:radio:checked");
     if (checked_button.attr("value") !== "add_sticky") {
         return popup_click_handler(x, y, map);
     }
@@ -24,19 +28,19 @@ function save_sticky() {
     y = sticky_popup.find("input#sticky-y").attr("value");
     errors = 0;
     sticky_popup.find("label").removeClass("alert");  // remove all previous errors
-    if (reporter == '') {
+    if (reporter === '') {
         sticky_popup.find("label#reporter").addClass("alert");
         errors += 1;
     }
-    if (title == '') {
+    if (title === '') {
         sticky_popup.find("label#title").addClass("alert");
         errors += 1;
     }
-    if (description == '') {
+    if (description === '') {
         sticky_popup.find("label#description").addClass("alert");
         errors += 1;
     }
-    if (errors == 0) {
+    if (errors === 0) {
         $.post(
             url,
             {x: x, y: y, reporter: reporter, title: title, description: description, tags: tags},
@@ -68,13 +72,13 @@ function sticky_add() {
 
 function sticky_add_handler(event) {
     // TODO: django form??
-    var old_feats, num_to_delete, popup, html, url, x, y;
+    var old_feats, num_to_delete, popup, html, url, x, y, i, feature;
     // destroy existing popups
     $("#sticky-popup").remove();
     // destroy "old" features, as a result there is always only 1 feature left.
     old_feats = [];
-    num_to_delete = pointLayer.features.length-1;
-    for (i=0; i<num_to_delete;i=i+1)
+    num_to_delete = pointLayer.features.length - 1;
+    for (i = 0; i < num_to_delete; i = i + 1)
     {
         old_feats[i] = pointLayer.features[i];
     }
@@ -83,7 +87,7 @@ function sticky_add_handler(event) {
 
     // prepare popup
     url = $("#sticky").attr("data-url-lizard-sticky-add");
-    feature = pointLayer.features[0]
+    feature = pointLayer.features[0];
     x = feature.geometry.x;
     y = feature.geometry.y;
 
@@ -101,11 +105,12 @@ function sticky_add_handler(event) {
         '<input id="sticky-x" type="hidden" name="x" value="' + x + '" />' +
         '<input id="sticky-y" type="hidden" name="y" value="' + y + '" />' +
         '</form>';
-    popup = new OpenLayers.Popup("sticky-popup",
-                                 new OpenLayers.LonLat(feature.geometry.x, feature.geometry.y),
-                                 new OpenLayers.Size(400,310),
-                                 html,
-                                 true);
+    popup = new OpenLayers.Popup(
+        "sticky-popup",
+        new OpenLayers.LonLat(feature.geometry.x, feature.geometry.y),
+        new OpenLayers.Size(400, 310),
+        html,
+        true);
     map.addPopup(popup);
     $("#submit-sticky").bind("click", save_sticky);
     // make sure that when the window is closed, the object is removed as well
@@ -126,7 +131,7 @@ function init_sticky() {
 
     $("#sticky_navigate").bind("click", sticky_navigate);
     $("#sticky_add").bind("click", sticky_add);
-    $("form#sticky input:radio#sticky_navigate").click()
+    $("form#sticky input:radio#sticky_navigate").click();
 }
 
 $(document).ready(init_sticky);
