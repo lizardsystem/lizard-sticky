@@ -23,6 +23,7 @@ ICON_STYLE = {'icon': 'sticky.png',
 
 
 class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
+
     def __init__(self, *args, **kwargs):
         """
         tags: list or queryset of tags
@@ -46,8 +47,8 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
         output_filename_abs = os.path.join(
             settings.MEDIA_ROOT, 'generated_icons', output_filename)
         # use filename in mapnik pointsymbolizer
-        point_looks = mapnik.PointSymbolizer(output_filename_abs, 'png',
-                                             16, 16)
+        point_looks = mapnik.PointSymbolizer(
+            output_filename_abs, 'png', 16, 16)
         point_looks.allow_overlap = True
         layout_rule = mapnik.Rule()
         layout_rule.symbols.append(point_looks)
@@ -77,40 +78,39 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
             # new database settings
             db_settings = settings.DATABASES['default']
 
-        if (db_settings['ENGINE'] == 'sqlite3' or
-            db_settings['ENGINE'] == 'django.contrib.gis.db.backends.spatialite'):
-            datasource = mapnik.SQLite
-            options = {'file': settings.DATABASES['default']['NAME']}
-            query = (
-                'select geom from lizard_sticky_sticky')
-        elif (db_settings == 'postgresql_psycopg2' or
-              db_settings['ENGINE'] == 'django.contrib.gis.db.backends.postgis'):
+        if db_settings['ENGINE'] == 'django.contrib.gis.db.backends.postgis':
             datasource = mapnik.PostGIS
-            options = {'host': db_settings['HOST'],
-                       'user': db_settings['USER'],
-                       'password': db_settings['PASSWORD'],
-                       'dbname': db_settings['NAME']}
-            if self.tags:
-                # make an inner join with given tags
-                query = (
-                    '(select sticky.geom from '
-                    '  lizard_sticky_sticky as sticky, lizard_sticky_tag as tag, '
-                    '  lizard_sticky_sticky_tags as sticky_tags '
-                    'where '
-                    '  sticky_tags.sticky_id = sticky.id and '
-                    '  sticky_tags.tag_id = tag.id and '
-                    '  (%s) '
-                    ') lizard_sticky_sticky' % \
-                    ' or '.join(['tag.slug = \'%s\'' % tag for tag in self.tags]),
-                    )
-            else:
-                query = (
-                    '(select geom from lizard_sticky_sticky) lizard_sticky_sticky')
-            # ^^^ Note: only works properly with postgresql, apparently.
+        elif db_settings['ENGINE'].endswith('oracle'):
+            # Does it work?
+            # support for oracle spatial 10g (versions 10.2.0.x)
+            datasource = mapnik.occi
         else:
             raise RuntimeError(
-                'Sorry, unconfigured db engine (%s%s) for mapnik integration.' % (
+                'Sorry, unconfigured db engine (%s%s)'
+                ' for mapnik integration.' % (
                     db_settings['ENGINE']))
+
+        options = {'host': db_settings['HOST'],
+                   'user': db_settings['USER'],
+                   'password': db_settings['PASSWORD'],
+                   'dbname': db_settings['NAME']}
+        if self.tags:
+            # Make an inner join with given tags.
+            query = (
+                '(select sticky.geom from '
+                '  lizard_sticky_sticky as sticky, lizard_sticky_tag as tag, '
+                '  lizard_sticky_sticky_tags as sticky_tags '
+                'where '
+                '  sticky_tags.sticky_id = sticky.id and '
+                '  sticky_tags.tag_id = tag.id and '
+                '  (%s) '
+                ') lizard_sticky_sticky' % \
+                ' or '.join(['tag.slug = \'%s\'' % tag for tag in self.tags]))
+        else:
+            # Select all stickies.
+            query = (
+                '(select geom from lizard_sticky_sticky) lizard_sticky_sticky')
+        # ^^^ Note: only works properly with postgresql???
 
         options['geometry_field'] = 'geom'
 
@@ -141,8 +141,8 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
         """
         # wgs84_x, wgs84_y = google_to_wgs84(google_x, google_y)
         pnt = Point(google_x, google_y, srid=900913)
-        stickies = Sticky.objects.filter(geom__distance_lte=(
-                pnt, D(m=radius * 0.5)))
+        stickies = Sticky.objects.filter(
+            geom__distance_lte=(pnt, D(m=radius * 0.5)))
 
         result = [{'distance': 0.0,
                    'name': '%s (%s)' % (sticky.title, sticky.reporter),
@@ -186,7 +186,8 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
         if snippet_group:
             snippets = snippet_group.snippets.all()
             identifiers = [snippet.identifier for snippet in snippets]
-        display_group = [self.location(**identifier) for identifier in identifiers]
+        display_group = [
+            self.location(**identifier) for identifier in identifiers]
         add_snippet = False
         if layout_options and 'add_snippet' in layout_options:
             add_snippet = layout_options['add_snippet']
@@ -194,5 +195,4 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
             'lizard_sticky/popup_sticky.html',
             {'display_group': display_group,
              'add_snippet': add_snippet,
-             'symbol_url': self.symbol_url()},
-            )
+             'symbol_url': self.symbol_url()})
