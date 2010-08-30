@@ -85,7 +85,7 @@ function sticky_add() {
 }
 
 function sticky_add_handler(event) {
-    var old_feats, num_to_delete, overlay;
+    var old_feats, num_to_delete, overlay, i, x, y, feature;
 
     // Destroy "old" features, as a result there is always only 1 feature left.
     old_feats = [];
