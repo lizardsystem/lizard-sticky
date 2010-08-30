@@ -4,38 +4,63 @@
 <div><img src="{{ symbol_url }}"/>&nbsp;</div>
 {# body #}
 <div style="width: 100%;">
-{% for display_object in display_group %}
-  <ol class="forms">
-    <li>
-      <label for="reporter">Naam</label>
-      <input type="text" name="reporter"
-             value="{{ display_object.object.reporter }}" readonly /></li>
-    <li>
-      <label for="title">Onderwerp</label>
-      <input type="text" name="title"
-             value="{{ display_object.object.title }}" readonly /></li>
-    <li>
-      <label for="description">Beschrijving</label>
-      <input type="text" name="description"
-             value="{{ display_object.object.description }}" readonly /></li>
-    <li>
-      <label for="tags">Kernwoorden</label>
-      <input type="text" name="tags"
-             value="{% for tag in display_object.object.tags.all %}{{ tag.slug }} {% endfor %}" readonly /></li>
-  </ol>
+  <form>
+    {% for display_object in display_group %}
+    <fieldset>
+      <div>
+        <label for="reporter">Naam</label><br />
+        <input type="text" name="reporter"
+               value="{{ display_object.object.reporter }}" readonly />
+      </div>
+      <div>
+        <label for="title">Onderwerp</label><br />
+        <input type="text" name="title"
+               value="{{ display_object.object.title }}" readonly />
+      </div>
+      <div>
+        <label for="description">Beschrijving</label><br />
+        <textarea name="description" class="popup-content"
+                  readonly>{{ display_object.object.description }}</textarea>
+      </div>
+      <div>
+        <label for="tags">Kernwoorden</label><br />
+        <input type="text" name="tags"
+               value="{% for tag in display_object.object.tags.all %}{{ tag.slug }} {% endfor %}" readonly />
+      </div>
+    </fieldset>
+  </form>
 {% endfor %}
-{% if add_snippet %}
-  {% for display_object in display_group %}
-    {{ display_object.name }}
-    {% with display_object.header as header %}
-      <a href=""
-      class="add-snippet ss_chart_line_add ss_sprite"
-      data-workspace-id="{{ display_object.workspace_item.workspace.id }}"
-      data-workspace-item-id="{{ display_object.workspace_item.id }}"
-      data-item-identifier='{{ display_object.identifier|json_escaped }}'
-      data-item-shortname="{{ display_object.shortname }}"
-      data-item-name="{{ header.name }}"></a>
-    {% endwith %}
-  {% endfor %}
-{% endif %}
+<table class="noprint generic-table">
+  <thead>
+    <tr>
+      <th>
+        Naam
+      </th>
+      {% if add_snippet %}
+      <th>
+        Voeg toe
+      </th>
+      {% endif %}
+    </tr>
+  </thead>
+  <tbody>
+      {% for display_object in display_group %}
+      <tr>
+        <td>{{ display_object.name }}</td>
+        {% if add_snippet %}
+        <td>
+          {% with display_object.header as header %}
+          <a href=""
+          class="add-snippet ss_chart_line_add ss_sprite"
+          data-workspace-id="{{ display_object.workspace_item.workspace.id }}"
+          data-workspace-item-id="{{ display_object.workspace_item.id }}"
+          data-item-identifier='{{ display_object.identifier|json_escaped }}'
+          data-item-shortname="{{ display_object.shortname }}"
+          data-item-name="{{ header.name }}"></a>
+          {% endwith %}
+        </td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+  </tbody>
 </div>

@@ -17,9 +17,12 @@ function sticky_popup_click_handler(x, y, map) {
 
 function save_sticky() {
     var url, x, y, reporter, title, description, tags, sticky_popup, old_feats, errors;
-    // there is always max 1 sticky popup
+
+    // There is always max 1 sticky popup.
     url = $("#sticky").attr("data-url-lizard-sticky-add");
     sticky_popup = $("form#add-sticky");
+
+    // Check form for errors.
     reporter = sticky_popup.find("input#sticky-reporter").attr("value");
     title = sticky_popup.find("input#sticky-title").attr("value");
     description = sticky_popup.find("input#sticky-description").attr("value");
@@ -40,25 +43,36 @@ function save_sticky() {
         sticky_popup.find("label#description").addClass("alert");
         errors += 1;
     }
+
+    // Post the sticky.
     if (errors === 0) {
         $.post(
             url,
             {x: x, y: y, reporter: reporter, title: title, description: description, tags: tags},
             function (data) {
                 // destroy existing popups and features
-                $("#sticky-popup").remove();
+                $("#add-sticky .close").click();
+
                 old_feats = pointLayer.features;
                 pointLayer.removeFeatures(old_feats);
                 pointLayer.destroyFeatures(old_feats);
-                // update all layers
+                // Update all layers.
                 updateLayers();
+
                 // TODO: update left menu
                 //$("#sticky-browser-list").load("./ .sticky-browser-item");
                 //setUpTree();
-                // jump back to navigation mode
+
+                // Jump back to navigation mode.
                 $("form#sticky input:radio#sticky_navigate").click();
+
+                // Do not reload page.
+                return false;
             }
         );
+    } else {
+        // Do not reload page.
+        return false;
     }
 }
 
@@ -71,11 +85,9 @@ function sticky_add() {
 }
 
 function sticky_add_handler(event) {
-    // TODO: django form??
-    var old_feats, num_to_delete, popup, html, url, x, y, i, feature;
-    // destroy existing popups
-    $("#sticky-popup").remove();
-    // destroy "old" features, as a result there is always only 1 feature left.
+    var old_feats, num_to_delete, overlay;
+
+    // Destroy "old" features, as a result there is always only 1 feature left.
     old_feats = [];
     num_to_delete = pointLayer.features.length - 1;
     for (i = 0; i < num_to_delete; i = i + 1)
@@ -85,41 +97,20 @@ function sticky_add_handler(event) {
     pointLayer.removeFeatures(old_feats);
     pointLayer.destroyFeatures(old_feats);
 
-    // prepare popup
-    url = $("#sticky").attr("data-url-lizard-sticky-add");
+    // Prepare popup.
     feature = pointLayer.features[0];
     x = feature.geometry.x;
     y = feature.geometry.y;
+    $("#sticky-x").attr("value", x);
+    $("#sticky-y").attr("value", y);
 
-    // show popup
-    html =
-        '<strong>Nieuw geeltje</strong>' +
-        '<form id="add-sticky" style="background-color: lightyellow;" action="' + url + '" method="post">' +
-        '<ol class="forms">' +
-        '<li><label for="reporter" id="reporter">Naam</label><input id="sticky-reporter" type="text" name="reporter" /></li>' +
-        '<li><label for="title" id="title">Onderwerp</label><input id="sticky-title" type="text" name="title" /></li>' +
-        '<li><label for="description" id="description">Beschrijving</label><input id="sticky-description" type="text" name="description"/></li>' +
-        '<li><label for="tags">Kernwoorden</label><input id="sticky-tags" type="text" name="tags" /></li>' +
-        '<button id="submit-sticky" type="button">Sla op</button>' +
-        '</ol>' +
-        '<input id="sticky-x" type="hidden" name="x" value="' + x + '" />' +
-        '<input id="sticky-y" type="hidden" name="y" value="' + y + '" />' +
-        '</form>';
-    popup = new OpenLayers.Popup(
-        "sticky-popup",
-        new OpenLayers.LonLat(feature.geometry.x, feature.geometry.y),
-        new OpenLayers.Size(400, 310),
-        html,
-        true);
-    map.addPopup(popup);
-    $("#submit-sticky").bind("click", save_sticky);
-    // make sure that when the window is closed, the object is removed as well
-    $(".olPopupCloseBox").bind("click", function () {
-        $(this).parent().parent().remove();
-    });
+    // Popup.
+    overlay = $("#add-sticky").overlay();
+    overlay.load();
 }
 
 function init_sticky() {
+    // Navigation or new sticky.
     pointLayer = new OpenLayers.Layer.Vector("Point Layer");
     pointController = new OpenLayers.Control.DrawFeature(
         pointLayer,
@@ -132,6 +123,11 @@ function init_sticky() {
     $("#sticky_navigate").bind("click", sticky_navigate);
     $("#sticky_add").bind("click", sticky_add);
     $("form#sticky input:radio#sticky_navigate").click();
+
+    // Bind submit to js function
+    $("#add-sticky").submit(save_sticky);
+    $("#add-sticky").overlay({});
+
 }
 
 $(document).ready(init_sticky);
