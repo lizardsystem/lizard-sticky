@@ -2,7 +2,7 @@ Changelog of lizard-sticky
 ===================================================
 
 
-0.4 (unreleased)
+0.4 (2010-09-01)
 ----------------
 
 - Fixed stickies by searching just by ID instead of by elementtype#id
