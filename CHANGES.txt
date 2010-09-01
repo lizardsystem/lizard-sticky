@@ -5,7 +5,8 @@ Changelog of lizard-sticky
 0.5 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Removed mapnik custom database query stuff, replaced by standard
+  django requests and building points layer manually.
 
 
 0.4 (2010-09-01)

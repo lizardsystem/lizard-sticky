@@ -61,63 +61,23 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
         """Return a layer with all stickies or stickies with selected
         tags
         """
+
         layers = []
         styles = {}
         layer = mapnik.Layer("Stickies", coordinates.WGS84)
-        layer.srs = coordinates.WGS84
 
-        if settings.DATABASE_ENGINE:
-            # old database settings
-            db_settings = {}
-            db_settings['HOST'] = settings.DATABASE_HOST
-            db_settings['USER'] = settings.DATABASE_USER
-            db_settings['PASSWORD'] = settings.DATABASE_PASSWORD
-            db_settings['NAME'] = settings.DATABASE_NAME
-            db_settings['ENGINE'] = settings.DATABASE_ENGINE
-        else:
-            # new database settings
-            db_settings = settings.DATABASES['default']
-
-        if db_settings['ENGINE'] == 'django.contrib.gis.db.backends.postgis':
-            datasource = mapnik.PostGIS
-        elif db_settings['ENGINE'].endswith('oracle'):
-            # Does it work?
-            # support for oracle spatial 10g (versions 10.2.0.x)
-            datasource = mapnik.occi
-        else:
-            raise RuntimeError(
-                'Sorry, unconfigured db engine (%s%s)'
-                ' for mapnik integration.' % (
-                    db_settings['ENGINE']))
-
-        options = {'host': db_settings['HOST'],
-                   'user': db_settings['USER'],
-                   'password': db_settings['PASSWORD'],
-                   'dbname': db_settings['NAME']}
+        layer.datasource = mapnik.PointDatasource()
         if self.tags:
-            # Make an inner join with given tags.
-            query = (
-                '(select sticky.geom from '
-                '  lizard_sticky_sticky as sticky, lizard_sticky_tag as tag, '
-                '  lizard_sticky_sticky_tags as sticky_tags '
-                'where '
-                '  sticky_tags.sticky_id = sticky.id and '
-                '  sticky_tags.tag_id = tag.id and '
-                '  (%s) '
-                ') lizard_sticky_sticky' % \
-                ' or '.join(['tag.slug = \'%s\'' % tag for tag in self.tags]))
+            stickies = Sticky.objects.filter(tags__in=self.tags)
         else:
-            # Select all stickies.
-            query = (
-                '(select geom from lizard_sticky_sticky) lizard_sticky_sticky')
-        # ^^^ Note: only works properly with postgresql???
+            stickies = Sticky.objects.all()
 
-        options['geometry_field'] = 'geom'
-
-        layer.datasource = datasource(table=str(query), **options)
+        for sticky in stickies:
+            layer.datasource.add_point(
+                sticky.geom.x, sticky.geom.y, 'Name', str(sticky.title))
 
         # generate "unique" point style name and append to layer
-        style_name = "Stickies %r " % self.tags
+        style_name = "Stickies %r" % self.tags
         styles[style_name] = self.style()
         layer.styles.append(style_name)
 
