@@ -20,15 +20,15 @@ function save_sticky() {
 
     // There is always max 1 sticky popup.
     url = $("#sticky").attr("data-url-lizard-sticky-add");
-    sticky_popup = $("form#add-sticky");
+    sticky_popup = $("#add-sticky");
 
     // Check form for errors.
-    reporter = sticky_popup.find("input#sticky-reporter").attr("value");
-    title = sticky_popup.find("input#sticky-title").attr("value");
-    description = sticky_popup.find("input#sticky-description").attr("value");
-    tags = sticky_popup.find("input#sticky-tags").attr("value");
-    x = sticky_popup.find("input#sticky-x").attr("value");
-    y = sticky_popup.find("input#sticky-y").attr("value");
+    reporter = sticky_popup.find("#sticky-reporter").attr("value");
+    title = sticky_popup.find("#sticky-title").attr("value");
+    description = sticky_popup.find("#sticky-description").attr("value");
+    tags = sticky_popup.find("#sticky-tags").attr("value");
+    x = sticky_popup.find("#sticky-x").attr("value");
+    y = sticky_popup.find("#sticky-y").attr("value");
     errors = 0;
     sticky_popup.find("label").removeClass("alert");  // remove all previous errors
     if (reporter === '') {
