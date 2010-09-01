@@ -5,7 +5,8 @@ Changelog of lizard-sticky
 0.4 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Fixed stickies by searching just by ID instead of by elementtype#id
+  combinations.  The bug was that one of the elements changed type recently.
 
 
 0.3 (2010-08-30)
