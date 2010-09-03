@@ -2,7 +2,7 @@ Changelog of lizard-sticky
 ===================================================
 
 
-0.5 (unreleased)
+0.5 (2010-09-03)
 ----------------
 
 - Removed mapnik custom database query stuff, replaced by standard
