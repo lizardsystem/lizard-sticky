@@ -25,7 +25,9 @@ class ModelTest(TestCase):
                   'x': '100.0',
                   'y': '100.0',
                   'tags': ''})
-        self.assertTrue(Sticky.objects.get(reporter='Jack'))
+        sticky = Sticky.objects.get(reporter='Jack')
+        self.assertTrue(sticky)
+        self.assertTrue(str(sticky))
 
     def test_create_sticky_tags(self):
         url = reverse('lizard_sticky.add_sticky')
@@ -40,3 +42,4 @@ class ModelTest(TestCase):
         self.assertTrue(Tag.objects.get(slug='zijn'))
         self.assertTrue(Tag.objects.get(slug='losse'))
         self.assertTrue(Tag.objects.get(slug='tags'))
+        self.assertTrue(str(Tag.objects.get(slug='tags')))
