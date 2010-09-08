@@ -11,7 +11,7 @@ from lizard_sticky.models import Sticky
 from lizard_sticky.models import Tag
 
 
-def sticky_browser(request, template=None):
+def sticky_browser(request, template='lizard_sticky/sticky-browser.html'):
     """Show sticky browser.
 
     Automatically makes new workspace if not yet available
@@ -21,8 +21,6 @@ def sticky_browser(request, template=None):
     workspaces = workspace_manager.load_or_create()
     date_range_form = DateRangeForm(
         current_start_end_dates(request, for_form=True))
-    if template is None:
-        template = 'lizard_sticky/sticky-browser.html'
     return render_to_response(
         template,
         {'date_range_form': date_range_form,

@@ -5,6 +5,9 @@ DATABASE_NAME = 'test.db'
 SITE_ID = 1
 INSTALLED_APPS = [
     'lizard_sticky',
+    'lizard_map',
+    'lizard_ui',
+    'compressor',
     'staticfiles',
     'django_nose',
     'django.contrib.admin',

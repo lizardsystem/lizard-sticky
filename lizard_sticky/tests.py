@@ -16,6 +16,11 @@ class ModelTest(TestCase):
     def test_smoke(self):
         self.assertTrue(lizard_sticky.models)
 
+    def test_visit_sticky_browser(self):
+        url = reverse('lizard_sticky.sticky_browser')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
     def test_create_sticky_notags(self):
         url = reverse('lizard_sticky.add_sticky')
         self.client.post(
