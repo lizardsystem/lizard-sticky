@@ -6,10 +6,10 @@ import lizard_sticky.models
 
 from lizard_sticky.models import Sticky
 from lizard_sticky.models import Tag
-from lizard_sticky.views import add_sticky
 
 
 class ModelTest(TestCase):
+
     def setUp(self):
         self.client = Client()
 
