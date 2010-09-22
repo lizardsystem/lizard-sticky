@@ -4,11 +4,6 @@
 
 {% block subtitle %} Geeltjes {% endblock %}
 
-{% block map-javascript-global %}
-{# pure javascript code that must be inserted in the map-javascript block #}
-    var pointLayer, pointController;
-{% endblock %}
-
 {% block css %}
   {{ block.super }}
 <link rel="stylesheet"
@@ -81,7 +76,7 @@
         data-adapter-layer-json='{}'>
       <span class="file">alle geeltjes</span></li>
     <li class="sticky-browser-item">
-      <span class="folder">op tags</span>
+      <span class="folder">op kernwoorden</span>
       <ul>
         {% for tag in tags %}
         <li class="workspace-acceptable file"

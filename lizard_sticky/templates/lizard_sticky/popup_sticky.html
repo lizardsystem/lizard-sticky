@@ -13,6 +13,9 @@
         <th>
           Beschrijving
         </th>
+        <th>
+          Kernwoorden
+        </th>
         {% if add_snippet %}
         <th>
           Voeg toe
@@ -25,6 +28,7 @@
         <tr>
           <td>{{ display_object.name }}</td>
           <td>{{ display_object.object.description }}</td>
+          <td>{{ display_object.object.tags.all|join:", " }}</td>
           {% if add_snippet %}
           <td>
             {% with display_object.header as header %}

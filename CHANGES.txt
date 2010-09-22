@@ -5,7 +5,12 @@ Changelog of lizard-sticky
 0.6 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Bugfix: prevent javascript to reload page (by adding "return
+  false").
+
+- Bugfix: layers that filters tags now work.
+
+- Bugfix: do not add "empty" tags.
 
 
 0.5 (2010-09-03)

@@ -16,6 +16,7 @@ from lizard_map.coordinates import wgs84_to_google
 from lizard_map.models import ICON_ORIGINALS
 from lizard_map.symbol_manager import SymbolManager
 from lizard_sticky.models import Sticky
+from lizard_sticky.models import Tag
 
 ICON_STYLE = {'icon': 'sticky.png',
               'mask': ('sticky_mask.png', ),
@@ -34,6 +35,7 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
         self.tags = []
         if 'tags' in self.layer_arguments:
             self.tags = self.layer_arguments['tags']
+            self.tag_objects = [Tag.objects.get(slug=tag) for tag in self.tags]
 
     def style(self):
         """
@@ -67,17 +69,19 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
         layer = mapnik.Layer("Stickies", coordinates.WGS84)
 
         layer.datasource = mapnik.PointDatasource()
-        if self.tags:
-            stickies = Sticky.objects.filter(tags__in=self.tags)
+        if self.tag_objects:
+            stickies = Sticky.objects.filter(tags__in=self.tag_objects)
         else:
             stickies = Sticky.objects.all()
 
         for sticky in stickies:
             layer.datasource.add_point(
                 sticky.geom.x, sticky.geom.y, 'Name', str(sticky.title))
+            layer.datasource.add_point(
+                sticky.geom.x+1, sticky.geom.y, 'Name', str(sticky.title))
 
         # generate "unique" point style name and append to layer
-        style_name = "Stickies %r" % self.tags
+        style_name = "Stickies"
         styles[style_name] = self.style()
         layer.styles.append(style_name)
 

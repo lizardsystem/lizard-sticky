@@ -44,5 +44,6 @@ class Sticky(models.Model):
         tags is a list of strings
         """
         for slug in slugs:
-            tag, _ = Tag.objects.get_or_create(slug=slug.lower())
-            self.tags.add(tag)
+            if slug:
+                tag, _ = Tag.objects.get_or_create(slug=slug.lower())
+                self.tags.add(tag)

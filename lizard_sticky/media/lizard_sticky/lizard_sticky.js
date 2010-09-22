@@ -70,6 +70,8 @@ function save_sticky() {
                 return false;
             }
         );
+        // Do not reload page.
+        return false;
     } else {
         // Do not reload page.
         return false;
