@@ -18,9 +18,6 @@ function sticky_popup_click_handler(x, y, map) {
 function save_sticky() {
     var url, x, y, reporter, title, description, tags, sticky_popup, old_feats, errors;
 
-    // Prevent default: post on url "action" (or './')
-    $(this).preventDefault();
-
     // There is always max 1 sticky popup.
     url = $("#sticky").attr("data-url-lizard-sticky-add");
     sticky_popup = $("#add-sticky");
@@ -68,17 +65,12 @@ function save_sticky() {
 
                 // Jump back to navigation mode.
                 $("form#sticky input:radio#sticky_navigate").click();
-
-                // Do not reload page.
-                return false;
             }
         );
-        // Do not reload page.
-        return false;
-    } else {
-        // Do not reload page.
-        return false;
     }
+
+    // Do not reload page.
+    return false;
 }
 
 function sticky_navigate() {
