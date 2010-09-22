@@ -33,6 +33,7 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
         """
         super(WorkspaceItemAdapterSticky, self).__init__(*args, **kwargs)
         self.tags = []
+        self.tag_objects = []
         if 'tags' in self.layer_arguments:
             self.tags = self.layer_arguments['tags']
             self.tag_objects = [Tag.objects.get(slug=tag) for tag in self.tags]
@@ -64,6 +65,10 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
         tags
         """
 
+        # Use these coordinates to put points 'around' actual
+        # coordinates, to compensate for bug #402 in mapnik.
+        around = [(1,1), (-1,1), (-1,-1), (1,-1)]
+
         layers = []
         styles = {}
         layer = mapnik.Layer("Stickies", coordinates.WGS84)
@@ -77,8 +82,12 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
         for sticky in stickies:
             layer.datasource.add_point(
                 sticky.geom.x, sticky.geom.y, 'Name', str(sticky.title))
-            layer.datasource.add_point(
-                sticky.geom.x+1, sticky.geom.y, 'Name', str(sticky.title))
+            for offset_x, offset_y in around:
+                layer.datasource.add_point(
+                    sticky.geom.x + offset_x,
+                    sticky.geom.y + offset_y,
+                    'Name',
+                    str(sticky.title))
 
         # generate "unique" point style name and append to layer
         style_name = "Stickies"

@@ -5,7 +5,9 @@ Changelog of lizard-sticky
 0.7 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Bugfix: "show all stickies" was broken.
+
+- Bugfix: better compensation for mapnik bug #402.
 
 
 0.6 (2010-09-22)
