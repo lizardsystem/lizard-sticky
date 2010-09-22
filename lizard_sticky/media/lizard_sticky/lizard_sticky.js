@@ -18,6 +18,9 @@ function sticky_popup_click_handler(x, y, map) {
 function save_sticky() {
     var url, x, y, reporter, title, description, tags, sticky_popup, old_feats, errors;
 
+    // Prevent default: post on url "action" (or './')
+    $(this).preventDefault();
+
     // There is always max 1 sticky popup.
     url = $("#sticky").attr("data-url-lizard-sticky-add");
     sticky_popup = $("#add-sticky");

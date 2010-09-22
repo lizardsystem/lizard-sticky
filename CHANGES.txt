@@ -5,7 +5,8 @@ Changelog of lizard-sticky
 0.8 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Bugfix: add preventDefault to js. This will prevent the js to reload
+  the page after posting a new sticky.
 
 
 0.7 (2010-09-22)
