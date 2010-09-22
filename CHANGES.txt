@@ -2,7 +2,7 @@ Changelog of lizard-sticky
 ===================================================
 
 
-0.6 (unreleased)
+0.6 (2010-09-22)
 ----------------
 
 - Bugfix: prevent javascript to reload page (by adding "return
