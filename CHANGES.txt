@@ -5,13 +5,15 @@ Changelog of lizard-sticky
 1.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Bugfix draw multiple stickies close to each other to compensate #402.
 
 
 1.0 (2010-09-22)
 ----------------
 
-- Nothing changed yet.
+- Bugfix posting stickies.
+
+- Clean up some code.
 
 
 0.8 (2010-09-22)
