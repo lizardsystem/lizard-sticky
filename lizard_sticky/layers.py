@@ -67,7 +67,10 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
 
         # Use these coordinates to put points 'around' actual
         # coordinates, to compensate for bug #402 in mapnik.
-        around = [(1,1), (-1,1), (-1,-1), (1,-1)]
+        around = [(0.00001,0),
+                  (-0.00001,0),
+                  (0,0.00001),
+                  (0,-0.00001)]
 
         layers = []
         styles = {}
