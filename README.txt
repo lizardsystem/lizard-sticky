@@ -3,9 +3,12 @@ lizard-sticky
 
 Introduction
 
-Usage, etc.
 
-More details in src/lizard_sticky/USAGE.txt .
+Requirements
+------------
+
+Make sure you have a geo enabled database. A good example is
+postGIS. This app will NOT work on sqlite.
 
 
 Usage
