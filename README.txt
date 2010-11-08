@@ -8,6 +8,28 @@ Usage, etc.
 More details in src/lizard_sticky/USAGE.txt .
 
 
+Usage
+-----
+
+- Add lizard_sticky to your buildout.cfg.
+
+- Add 'lizard_sticky' and 'lizard_map' to the INSTALLED_APPS in your
+  settings.
+
+- Include lizard-sticky in your urls.py.
+    (r'^sticky/', include('lizard_sticky.urls')),
+
+- Refer to the sticky browser from somewhere:
+
+{% url lizard_sticky.sticky_browser %}
+
+or
+
+reverse('lizard_sticky.sticky_browser')
+
+- Run syncdb to make appropriate database tables.
+
+
 Development installation
 ------------------------
 
