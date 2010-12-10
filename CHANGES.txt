@@ -2,7 +2,7 @@ Changelog of lizard-sticky
 ===================================================
 
 
-1.2 (unreleased)
+1.2 (2010-12-10)
 ----------------
 
 - Renamed "Geeltje" to "Melding".
