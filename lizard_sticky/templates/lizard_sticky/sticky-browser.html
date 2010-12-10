@@ -2,7 +2,7 @@
 {% extends "lizard_map/wms.html" %}
 {% load workspaces %}
 
-{% block subtitle %} Geeltjes {% endblock %}
+{% block subtitle %} Meldingen {% endblock %}
 
 {% block css %}
   {{ block.super }}
@@ -22,19 +22,19 @@
 <div id="sticky"
      data-url-lizard-sticky-add="{% url lizard_sticky.add_sticky %}"
      class="sidebarbox">
-  <h2>Geeltjes{% block linkback %}{% endblock %}</h2>
+  <h2>Meldingen{% block linkback %}{% endblock %}</h2>
   <form id="sticky">
     <input id="sticky_navigate" type="radio" name="sticky" value="sticky_navigate" checked>Navigeren</input>
-    <input id="sticky_add" type="radio" name="sticky" value="add_sticky">Plak geeltje</input>
+    <input id="sticky_add" type="radio" name="sticky" value="add_sticky">Melding plaatsen</input>
   </form>
   </ul>
 
   {# The add-sticky popup div #}
   <div class="popup hide"
        id="add-sticky">
-    <h1>Geeltje</h1>
+    <h1>Melding</h1>
     <div>
-      <strong>Nieuw geeltje</strong>
+      <strong>Nieuwe melding</strong>
       <form id="add-sticky" style="background-color: lightyellow;" method="post">{% csrf_token %}
       <fieldset>
         <div>
@@ -68,25 +68,25 @@
 
 <div id="sticky-browser"
      class="sidebarbox sidebarbox-stretched">
-  <h2>Geeltjes bladeren</h2>
+  <h2>Meldingen bladeren</h2>
   <ul id="sticky-browser-list" class="automatic-tree filetree">
     <li class="workspace-acceptable file sticky-browser-item"
-        data-name="Geeltjes"
+        data-name="Meldingen"
         data-adapter-class="adapter_sticky"
         data-adapter-layer-json='{}'>
-      <span class="file">alle geeltjes</span></li>
+      <span class="file">alle meldingen</span></li>
     <li class="sticky-browser-item">
       <span class="folder">op kernwoorden</span>
       <ul>
         {% for tag in tags %}
         <li class="workspace-acceptable file"
-            data-name="Geeltjes ({{ tag }})"
+            data-name="Meldingen ({{ tag }})"
             data-adapter-class="adapter_sticky"
             data-adapter-layer-json='{"tags": ["{{ tag.slug }}"]}'>
           <span class="file">{{ tag }}</span>
         </li>
         {% empty %}
-        <li><span class="file">geen tags</span></li>
+        <li><span class="file">geen kernwoorden</span></li>
         {% endfor %}
       </ul>
     </li>
