@@ -1,4 +1,5 @@
 from django.contrib.gis.geos import Point
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -11,7 +12,9 @@ from lizard_sticky.models import Sticky
 from lizard_sticky.models import Tag
 
 
-def sticky_browser(request, template='lizard_sticky/sticky-browser.html'):
+def sticky_browser(request,
+                   template='lizard_sticky/sticky-browser.html',
+                   crumbs_prepend=None):
     """Show sticky browser.
 
     Automatically makes new workspace if not yet available
@@ -21,6 +24,14 @@ def sticky_browser(request, template='lizard_sticky/sticky-browser.html'):
     workspaces = workspace_manager.load_or_create()
     date_range_form = DateRangeForm(
         current_start_end_dates(request, for_form=True))
+
+    if crumbs_prepend is not None:
+        crumbs = crumbs_prepend
+    else:
+        crumbs = [{'name': 'home', 'url': '/'}]
+    crumbs.append({'name': 'meldingen',
+                   'url': reverse('lizard_sticky.sticky_browser')})
+
     return render_to_response(
         template,
         {'date_range_form': date_range_form,
@@ -28,6 +39,7 @@ def sticky_browser(request, template='lizard_sticky/sticky-browser.html'):
          'javascript_hover_handler': 'popup_hover_handler',
          'javascript_click_handler': 'sticky_popup_click_handler',
          'tags': Tag.objects.all(),
+         'crumbs': crumbs,
          },
         context_instance=RequestContext(request))
 

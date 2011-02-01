@@ -74,7 +74,7 @@
         data-name="Meldingen"
         data-adapter-class="adapter_sticky"
         data-adapter-layer-json='{}'>
-      <span class="file">alle meldingen</span></li>
+      alle meldingen</li>
     <li class="sticky-browser-item">
       <span class="folder">op kernwoorden</span>
       <ul>
@@ -83,10 +83,10 @@
             data-name="Meldingen ({{ tag }})"
             data-adapter-class="adapter_sticky"
             data-adapter-layer-json='{"tags": ["{{ tag.slug }}"]}'>
-          <span class="file">{{ tag }}</span>
+          {{ tag }}
         </li>
         {% empty %}
-        <li><span class="file">geen kernwoorden</span></li>
+        <li>geen kernwoorden</li>
         {% endfor %}
       </ul>
     </li>
