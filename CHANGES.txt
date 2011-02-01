@@ -5,6 +5,8 @@ Changelog of lizard-sticky
 1.3 (unreleased)
 ----------------
 
+- Minor layout changes.
+
 - Added option crumbs_prepend (see lizard_ui).
 
 
