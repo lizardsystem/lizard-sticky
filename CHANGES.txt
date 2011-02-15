@@ -5,7 +5,7 @@ Changelog of lizard-sticky
 1.5 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Moved sticky.png to app_icons subdir.
 
 
 1.4 (2011-02-03)
