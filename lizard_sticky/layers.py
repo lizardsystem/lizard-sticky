@@ -74,7 +74,8 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
 
         layers = []
         styles = {}
-        layer = mapnik.Layer("Stickies", coordinates.WGS84)
+        map_settings = coordinates.MapSettings()
+        layer = mapnik.Layer("Stickies", map_settings.mapnik_projection())
 
         layer.datasource = mapnik.PointDatasource()
         if self.tag_objects:
