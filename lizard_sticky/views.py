@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
+from lizard_map import coordinates
 from lizard_map.daterange import current_start_end_dates
 from lizard_map.daterange import DateRangeForm
 from lizard_map.workspace import WorkspaceManager
@@ -60,12 +61,15 @@ def add_sticky(request):
     x = request.POST.get("x")
     y = request.POST.get("y")
     geom = Point(float(x), float(y))
+    map_settings = coordinates.MapSettings()
+    geom.srid = map_settings.srid
     tags = request.POST.get("tags", "")
 
     sticky = Sticky(reporter=reporter,
                     title=title,
                     description=description,
                     geom=geom)
+
     sticky.save()
     sticky.add_tags(tags.split(" "))
     return HttpResponse("")

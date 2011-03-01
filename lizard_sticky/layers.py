@@ -10,8 +10,8 @@ from django.contrib.gis.measure import D
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 
-from lizard_map import coordinates
 from lizard_map import workspace
+from lizard_map.coordinates import WGS84
 from lizard_map.coordinates import wgs84_to_google
 from lizard_map.models import ICON_ORIGINALS
 from lizard_map.symbol_manager import SymbolManager
@@ -67,15 +67,14 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
 
         # Use these coordinates to put points 'around' actual
         # coordinates, to compensate for bug #402 in mapnik.
-        around = [(0.00001,0),
-                  (-0.00001,0),
-                  (0,0.00001),
-                  (0,-0.00001)]
+        around = [(0.00001, 0),
+                  (-0.00001, 0),
+                  (0, 0.00001),
+                  (0, -0.00001)]
 
         layers = []
         styles = {}
-        map_settings = coordinates.MapSettings()
-        layer = mapnik.Layer("Stickies", map_settings.mapnik_projection())
+        layer = mapnik.Layer("Stickies", WGS84)
 
         layer.datasource = mapnik.PointDatasource()
         if self.tag_objects:
@@ -84,6 +83,7 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
             stickies = Sticky.objects.all()
 
         for sticky in stickies:
+            print sticky.geom.x, sticky.geom.y
             layer.datasource.add_point(
                 sticky.geom.x, sticky.geom.y, 'Name', str(sticky.title))
             for offset_x, offset_y in around:
@@ -116,8 +116,11 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
         returns a list of dicts with keys distance, name, shortname,
         google_coords, workspace_item, identifier
         """
-        # wgs84_x, wgs84_y = google_to_wgs84(google_x, google_y)
-        pnt = Point(google_x, google_y, srid=900913)
+        #from lizard_map.coordinates import google_to_rd
+        #x, y = google_to_rd(google_x, google_y)
+        #pnt = Point(x, y, srid=28992)  # 900913
+        pnt = Point(google_x, google_y, srid=900913)  # 900913
+        #print pnt, radius
         stickies = Sticky.objects.filter(
             geom__distance_lte=(pnt, D(m=radius * 0.5)))
 
@@ -125,8 +128,8 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
                    'name': '%s (%s)' % (sticky.title, sticky.reporter),
                    'shortname': str(sticky.title),
                    'object': sticky,
-                   'google_coords': wgs84_to_google(sticky.geom.x,
-                                                    sticky.geom.y),
+                   #'google_coords': wgs84_to_google(sticky.geom.x,
+                   #                                 sticky.geom.y),
                    'workspace_item': self.workspace_item,
                    'identifier': {'sticky_id': sticky.id},
                    } for sticky in stickies]
