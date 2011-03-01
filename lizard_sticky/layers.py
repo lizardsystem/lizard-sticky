@@ -83,7 +83,6 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
             stickies = Sticky.objects.all()
 
         for sticky in stickies:
-            print sticky.geom.x, sticky.geom.y
             layer.datasource.add_point(
                 sticky.geom.x, sticky.geom.y, 'Name', str(sticky.title))
             for offset_x, offset_y in around:
