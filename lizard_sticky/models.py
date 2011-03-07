@@ -30,9 +30,7 @@ class Sticky(models.Model):
                                    null=True)
 
     # geo stuff
-    # google_x = models.FloatField()
-    # google_y = models.FloatField()
-    geom = models.PointField()  # srid 4326
+    geom = models.PointField()  # default srid 4326
     objects = models.GeoManager()
 
     def __unicode__(self):

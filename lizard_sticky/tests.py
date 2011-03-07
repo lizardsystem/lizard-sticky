@@ -1,3 +1,4 @@
+from django.contrib.gis.utils import add_srs_entry
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import Client
@@ -7,11 +8,11 @@ import lizard_sticky.models
 from lizard_sticky.models import Sticky
 from lizard_sticky.models import Tag
 
-
 class ModelTest(TestCase):
 
     def setUp(self):
         self.client = Client()
+        add_srs_entry(900913)  # Add google srs entry.
 
     def test_smoke(self):
         self.assertTrue(lizard_sticky.models)
@@ -22,6 +23,11 @@ class ModelTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_create_sticky_notags(self):
+        """Add sticky without tags.
+
+        x=146414&y=489585.5&reporter=Jack&title=poep
+        &description=poep+op+straat&tags=poep
+        """
         url = reverse('lizard_sticky.add_sticky')
         self.client.post(
             url, {'reporter': 'Jack',

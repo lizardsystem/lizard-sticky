@@ -71,5 +71,6 @@ def add_sticky(request):
                     geom=geom)
 
     sticky.save()
+
     sticky.add_tags(tags.split(" "))
     return HttpResponse("")
