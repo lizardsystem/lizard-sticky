@@ -2,10 +2,10 @@ Changelog of lizard-sticky
 ===================================================
 
 
-1.7.2 (unreleased)
+1.7.2 (2011-04-14)
 ------------------
 
-- Nothing changed yet.
+- Removed popup header (looks better).
 
 
 1.7.1 (2011-03-01)
