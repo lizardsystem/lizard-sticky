@@ -1,7 +1,7 @@
 from setuptools import setup
 import os.path
 
-version = '1.8'
+version = '1.9dev'
 
 long_description = '\n\n'.join([
     open('README.txt').read(),
@@ -13,7 +13,7 @@ long_description = '\n\n'.join([
 install_requires = [
     'Django',
     'django-staticfiles',
-    'lizard-map',
+    'lizard-map >= 1.60',
     'django-nose',
     ],
 
