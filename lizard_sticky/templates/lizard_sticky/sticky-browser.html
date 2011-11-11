@@ -78,7 +78,7 @@
     <li class="sticky-browser-item">
       <span class="folder">op kernwoorden</span>
       <ul>
-        {% for tag in tags %}
+        {% for tag in view.tags %}
         <li class="workspace-acceptable file"
             data-name="Meldingen ({{ tag }})"
             data-adapter-class="adapter_sticky"
@@ -93,10 +93,7 @@
   </ul>
 </div>
 
-{% for workspace in workspaces.user %}
-  {% workspace workspace %}
-{% empty %}
-No workspace
-{% endfor %}
+{% workspace_edit view.workspace_edit %}
+{% collage_edit view.collage_edit %}
 
 {% endblock %}

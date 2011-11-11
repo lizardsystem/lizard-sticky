@@ -13,7 +13,8 @@ long_description = '\n\n'.join([
 install_requires = [
     'Django',
     'django-staticfiles',
-    'lizard-map >= 1.60',
+    'lizard-map >= 3.4.2',
+    'lizard-ui >= 3.7',
     'django-nose',
     ],
 

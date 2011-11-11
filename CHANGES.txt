@@ -5,6 +5,12 @@ Changelog of lizard-sticky
 1.9 (unreleased)
 ----------------
 
+- Changed views to classes to work with latest lizard-map. Updated
+  templates to reflect this.
+
+- Changed setup.py to require at least the currently latest 
+  lizard-map (3.4.2) and lizard-ui (3.7).
+
 - Added dependency of map >= 1.60.
 
 

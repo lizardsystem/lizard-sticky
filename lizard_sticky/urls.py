@@ -2,13 +2,13 @@ from django.conf.urls.defaults import *
 from django.conf import settings
 from django.contrib import admin
 
+from views import StickyBrowserView
 
 admin.autodiscover()
 
 urlpatterns = patterns(
     '',
-    url(r'^$',
-        'lizard_sticky.views.sticky_browser',
+    url(r'^$', StickyBrowserView.as_view(),
         name='lizard_sticky.sticky_browser'),
     url(r'^add_sticky/$',
         'lizard_sticky.views.add_sticky',
