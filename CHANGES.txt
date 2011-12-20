@@ -7,8 +7,9 @@ Changelog of lizard-sticky
 
 - Fixed add to collage button in popup.
 
-- Require latest lizard-map (3.7).
+- Made saving work again.
 
+- Require latest lizard-map (3.8).
 
 1.9 (2011-11-11)
 ----------------
