@@ -5,7 +5,9 @@ Changelog of lizard-sticky
 1.10 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Fixed add to collage button in popup.
+
+- Require latest lizard-map (3.7).
 
 
 1.9 (2011-11-11)

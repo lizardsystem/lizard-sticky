@@ -30,15 +30,14 @@
           <td>{{ display_object.object.tags.all|join:", " }}</td>
           {% if add_snippet %}
           <td>
-            {% with display_object.header as header %}
-            <a href=""
-            class="add-snippet ss_chart_line_add ss_sprite"
-            data-workspace-id="{{ display_object.workspace_item.workspace.id }}"
-            data-workspace-item-id="{{ display_object.workspace_item.id }}"
-            data-item-identifier='{{ display_object.identifier|json_escaped }}'
-            data-item-shortname="{{ display_object.shortname }}"
-            data-item-name="{{ header.name }}"></a>
-            {% endwith %}
+            <a href="{% url lizard_map_collage_add %}"
+            class="collage-add ss_star ss_sprite"
+	    data-target-id="#edit-collage"
+	    data-adapter-class="{{ adapter_class }}"
+	    data-adapter-layer-json="{{ adapter_layer_json }}"
+            data-identifier="{{ display_object.identifier|json_escaped }}"
+            data-name="{{ display_object.name }}"
+	    title="Toevoegen aan selectie"></a>
           </td>
           {% endif %}
         </tr>

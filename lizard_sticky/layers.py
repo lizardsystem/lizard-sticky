@@ -2,6 +2,7 @@
 Adapter for lizard-sticky
 """
 import os
+import logging
 import mapnik
 
 from django.conf import settings
@@ -9,6 +10,7 @@ from django.contrib.gis.geos import Point
 from django.contrib.gis.measure import D
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
+from django.utils import simplejson as json
 
 from lizard_map import workspace
 from lizard_map.coordinates import WGS84
@@ -22,6 +24,7 @@ ICON_STYLE = {'icon': 'sticky.png',
               'mask': ('sticky_mask.png', ),
               'color': (1, 1, 0, 0)}
 
+logger = logging.getLogger('lizard_sticky.layers')
 
 class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
 
@@ -158,13 +161,14 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
             end_date=end_date,
             icon_style=ICON_STYLE)
 
-    def html(self, snippet_group=None, identifiers=None, layout_options=None):
+    def html(self, identifiers=None, layout_options=None):
         """
         Renders stickies
+        Note: removed snipper_group kwargs because it is not used anymore.
+        Therefore sticky now requires lizard_map >= 3.7, the current
+        version.
         """
-        if snippet_group:
-            snippets = snippet_group.snippets.all()
-            identifiers = [snippet.identifier for snippet in snippets]
+
         display_group = [
             self.location(**identifier) for identifier in identifiers]
         add_snippet = False
@@ -174,4 +178,6 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
             'lizard_sticky/popup_sticky.html',
             {'display_group': display_group,
              'add_snippet': add_snippet,
-             'symbol_url': self.symbol_url()})
+             'symbol_url': self.symbol_url(),
+             'adapter_class': self.adapter_class,
+             'adapter_layer_json': json.dumps(self.layer_arguments)})
