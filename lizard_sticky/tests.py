@@ -8,6 +8,7 @@ import lizard_sticky.models
 from lizard_sticky.models import Sticky
 from lizard_sticky.models import Tag
 
+from lizard_map.models import Setting
 
 class ModelTest(TestCase):
 
@@ -29,6 +30,14 @@ class ModelTest(TestCase):
         x=146414&y=489585.5&reporter=Jack&title=poep
         &description=poep+op+straat&tags=poep
         """
+
+        # X and Y are assumed to be in the site's projection
+        # So we need to set one. Should be a fixture.
+        s = Setting()
+        s.key = 'projection'
+        s.value = 'EPSG:28992'
+        s.save()
+
         url = reverse('lizard_sticky.add_sticky')
         self.client.post(
             url, {'reporter': 'Jack',
