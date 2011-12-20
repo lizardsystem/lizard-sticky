@@ -26,6 +26,7 @@ ICON_STYLE = {'icon': 'sticky.png',
 
 logger = logging.getLogger('lizard_sticky.layers')
 
+
 class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
 
     def __init__(self, *args, **kwargs):

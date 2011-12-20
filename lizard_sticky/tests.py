@@ -8,6 +8,7 @@ import lizard_sticky.models
 from lizard_sticky.models import Sticky
 from lizard_sticky.models import Tag
 
+
 class ModelTest(TestCase):
 
     def setUp(self):

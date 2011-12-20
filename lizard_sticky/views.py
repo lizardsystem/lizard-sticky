@@ -1,14 +1,11 @@
-from django.contrib.gis.geos import Point
-from django.core.urlresolvers import reverse
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
-from django.template import RequestContext
 
 from lizard_map.views import AppView
 
 from lizard_map import coordinates
 from lizard_sticky.models import Sticky
 from lizard_sticky.models import Tag
+
 
 class StickyBrowserView(AppView):
     """Show sticky browser.
@@ -22,7 +19,8 @@ class StickyBrowserView(AppView):
     javascript_click_handler = 'sticky_popup_click_handler'
 
     def tags(self):
-         return Tag.objects.all()
+        return Tag.objects.all()
+
 
 def add_sticky(request):
     """
@@ -32,7 +30,7 @@ def add_sticky(request):
     reporter
     title
     description
-    x,y (google)
+    x,y (project is configured in the site's Settings)
     tags -> split into separated tags
     """
     reporter = request.POST.get("reporter")
@@ -40,17 +38,16 @@ def add_sticky(request):
     description = request.POST.get("description")
     x = request.POST.get("x")
     y = request.POST.get("y")
-    geom = Point(float(x), float(y))
-#    TODO: Jack deleted coordinates.MapSettings -- check
-#          if it's not still needed for this.
-#    map_settings = coordinates.MapSettings()
+
+    # Transform from the site's configured projection to wgs84
+    geom = coordinates.transform_point(float(x), float(y), to_proj='wgs84')
 
     tags = request.POST.get("tags", "")
 
-    sticky = Sticky(reporter='reporter',
-                    title='title',
-                    description='description',
-                    geom=Point(0.0, 0.0))
+    sticky = Sticky(reporter=reporter,
+                    title=title,
+                    description=description,
+                    geom=geom)
 
     sticky.save()
 

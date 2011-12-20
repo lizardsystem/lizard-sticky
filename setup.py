@@ -1,5 +1,4 @@
 from setuptools import setup
-import os.path
 
 version = '1.10dev'
 
@@ -13,7 +12,7 @@ long_description = '\n\n'.join([
 install_requires = [
     'Django',
     'django-staticfiles',
-    'lizard-map >= 3.7',
+    'lizard-map >= 3.8',
     'lizard-ui >= 3.7',
     'django-nose',
     ],
@@ -39,7 +38,7 @@ setup(name='lizard-sticky',
       zip_safe=False,
       install_requires=install_requires,
       tests_require=tests_require,
-      extras_require = {'test': tests_require},
+      extras_require={'test': tests_require},
       entry_points={
           'console_scripts': [
           ],
