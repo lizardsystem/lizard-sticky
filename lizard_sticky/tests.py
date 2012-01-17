@@ -10,6 +10,7 @@ from lizard_sticky.models import Tag
 
 from lizard_map.models import Setting
 
+
 class ModelTest(TestCase):
 
     def setUp(self):
