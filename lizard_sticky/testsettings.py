@@ -1,3 +1,5 @@
+import os
+
 DEBUG = True
 TEMPLATE_DEBUG = True
 DATABASE_ENGINE = 'sqlite3'
@@ -23,6 +25,10 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 # Used for django-staticfiles
 STATIC_URL = '/static_media/'
+SETTINGS_DIR = os.path.dirname(os.path.realpath(__file__))
+BUILDOUT_DIR = os.path.abspath(os.path.join(SETTINGS_DIR, '..'))
+STATIC_ROOT = os.path.join(BUILDOUT_DIR, 'var', 'static')
+
 TEMPLATE_CONTEXT_PROCESSORS = (
     # Default items.
     "django.core.context_processors.auth",
