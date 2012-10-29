@@ -9,7 +9,7 @@ function sticky_popup_click_handler(x, y, map) {
     var checked_button;
     // get checked radiobutton
     checked_button = $("form#sticky input:radio:checked");
-    if (checked_button.attr("value") !== "add_sticky") {
+    if (checked_button.attr("value") !== "sticky_add") {
         return popup_click_handler(x, y, map);
     }
     // else: handled by pointController
@@ -64,7 +64,8 @@ function save_sticky() {
                 //setUpTree();
 
                 // Jump back to navigation mode.
-                $("form#sticky input:radio#sticky_navigate").click();
+                $("form#sticky input:radio#sticky-navigate").click();
+                $("#add-sticky").dialog('close');
             }
         );
     }
@@ -102,8 +103,7 @@ function sticky_add_handler(event) {
     $("#sticky-y").attr("value", y);
 
     // Popup.
-    overlay = $("#add-sticky").overlay();
-    overlay.load();
+    $("#add-sticky").dialog('open');
 }
 
 function init_sticky() {
@@ -117,14 +117,15 @@ function init_sticky() {
     map.addLayer(pointLayer);
     map.addControl(pointController);
 
-    $("#sticky_navigate").bind("click", sticky_navigate);
-    $("#sticky_add").bind("click", sticky_add);
-    $("form#sticky input:radio#sticky_navigate").click();
+    $("#sticky-navigate").bind("click", sticky_navigate);
+    $("#sticky-add").bind("click", sticky_add);
+
+    $("#sticky-navigate").attr('checked', 'checked')
+    sticky_navigate();
 
     // Bind submit to js function
     $("#add-sticky").submit(save_sticky);
-    $("#add-sticky").overlay({});
-
+    $("#add-sticky").dialog({autoOpen: false, width: 500});
 }
 
 $(document).ready(init_sticky);

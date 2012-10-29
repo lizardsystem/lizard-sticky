@@ -12,8 +12,8 @@
       media="screen, projection" />
 {% endblock css %}
 
-{% block head-extras %}
-{# this block must come after the map-javascript block, so we use head-extras #}
+{% block map-javascript %}
+{{ block.super }}
 <script type="text/javascript"
         src="{{ STATIC_URL }}lizard_sticky/lizard_sticky.js"></script>
 {% endblock %}
@@ -23,9 +23,19 @@
      data-url-lizard-sticky-add="{% url lizard_sticky.add_sticky %}"
      class="sidebarbox">
   <h2>Meldingen{% block linkback %}{% endblock %}</h2>
-  <form id="sticky">
-    <input id="sticky_navigate" type="radio" name="sticky" value="sticky_navigate" checked><label for="sticky_navigate">Navigeren</label></input>
-    <input id="sticky_add" type="radio" name="sticky" value="add_sticky"><label for="sticky_add">Melding plaatsen</label></input>
+  <form id="sticky" class="form-horizontal">
+    <div class="control-group">
+        <label class="radio" for="sticky-navigate">
+            <input class="controls" id="sticky-navigate" type="radio" name="sticky" value="sticky_navigate" />
+            Navigeren
+        </label>
+    </div>
+    <div class="control-group">
+        <label class="radio" for="sticky-add">
+            <input class="controls" id="sticky-add" type="radio" name="sticky" value="sticky_add" />
+            Melding plaatsen
+        </label>
+    </div>
   </form>
   </ul>
 
@@ -39,22 +49,18 @@
       <fieldset>
         <div>
           <label for="reporter" id="reporter">Naam</label>
-          <br />
           <input id="sticky-reporter" type="text" name="reporter" />
         </div>
         <div>
           <label for="title" id="title">Onderwerp</label>
-          <br />
           <input id="sticky-title" type="text" name="title" />
         </div>
         <div>
           <label for="description" id="description">Beschrijving</label>
-          <br />
           <textarea id="sticky-description" name="description" rows="2" cols="30"></textarea>
         </div>
         <div>
           <label for="tags">Kernwoorden</label>
-          <br />
           <input id="sticky-tags" type="text" name="tags" />
         </div>
       </fieldset>
@@ -92,8 +98,5 @@
     </li>
   </ul>
 </div>
-
-{% workspace_edit view.workspace_edit %}
-{% collage_edit view.collage_edit %}
 
 {% endblock %}
