@@ -182,3 +182,18 @@ class WorkspaceItemAdapterSticky(workspace.WorkspaceItemAdapter):
              'symbol_url': self.symbol_url(),
              'adapter_class': self.adapter_class,
              'adapter_layer_json': json.dumps(self.layer_arguments)})
+
+    def legend_image_urls(self):
+        """
+        returns symbol
+
+        TODO: the identifier is always None, so individual symbols
+        cannot be retrieved.
+        """
+        symbol_manager = SymbolManager(
+            ICON_ORIGINALS,
+            os.path.join(settings.MEDIA_ROOT, 'generated_icons'))
+        output_filename = symbol_manager.get_symbol_transformed(
+            ICON_STYLE['icon'], **ICON_STYLE)
+        icon = '%sgenerated_icons/%s' % (settings.MEDIA_URL, output_filename)
+        return [icon]
