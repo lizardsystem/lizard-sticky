@@ -7,6 +7,8 @@ Changelog of lizard-sticky
 
 - Convert to Lizard 4.0.
 
+- Add support for the legend.
+
 
 1.10 (2011-12-20)
 -----------------
