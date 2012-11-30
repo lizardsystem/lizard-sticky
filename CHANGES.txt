@@ -9,6 +9,8 @@ Changelog of lizard-sticky
 
 - Add support for the legend.
 
+- Properly set dependency versions.
+
 
 1.10 (2011-12-20)
 -----------------
