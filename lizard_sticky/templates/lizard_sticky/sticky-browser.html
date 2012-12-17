@@ -76,16 +76,21 @@
      class="sidebarbox sidebarbox-stretched">
   <h2>Meldingen bladeren</h2>
   <ul id="sticky-browser-list" class="automatic-tree filetree">
-    <li class="workspace-acceptable file sticky-browser-item"
+    <li class="workspace-acceptable node sticky-browser-item"
         data-name="Meldingen"
         data-adapter-class="adapter_sticky"
         data-adapter-layer-json='{}'>
-      alle meldingen</li>
-    <li class="sticky-browser-item">
-      <span class="folder">op kernwoorden</span>
+      <div class="hitarea">
+        <span class="folder">alle meldingen</span>
+      </div>
+    </li>
+    <li class="node sticky-browser-item">
+      <div class="hitarea">
+        <span class="folder">op kernwoorden</span>
+      </div>
       <ul>
         {% for tag in view.tags %}
-        <li class="workspace-acceptable file"
+        <li class="workspace-acceptable leaf"
             data-name="Meldingen ({{ tag }})"
             data-adapter-class="adapter_sticky"
             data-adapter-layer-json='{"tags": ["{{ tag.slug }}"]}'>
