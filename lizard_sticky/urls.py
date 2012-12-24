@@ -13,14 +13,12 @@ urlpatterns = patterns(
     url(r'^add_sticky/$',
         'lizard_sticky.views.add_sticky',
         name='lizard_sticky.add_sticky'),
-    (r'^map/', include('lizard_map.urls')),
     )
 
-
-if settings.DEBUG:
-    # Add this also to the projects that use this application
+if getattr(settings, 'LIZARD_STICKY_STANDALONE', False):
     urlpatterns += patterns(
         '',
-        (r'', include('staticfiles.urls')),
+        (r'^map/', include('lizard_map.urls')),
         (r'^admin/', include(admin.site.urls)),
+        (r'', include('staticfiles.urls')),
     )
