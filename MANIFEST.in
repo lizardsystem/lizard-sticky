@@ -1,0 +1,4 @@
+recursive-include lizard_sticky *
+#recursive-include docs *
+include *
+global-exclude *.pyc
