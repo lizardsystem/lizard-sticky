@@ -14,6 +14,7 @@ install_requires = [
     'lizard-map >= 4.0, < 5.0',
     'lizard-ui >= 4.0, < 5.0',
     'django-nose',
+    'south',
     ],
 
 tests_require = [
