@@ -14,7 +14,7 @@ class Tag(models.Model):
     slug = models.SlugField()
 
     def __unicode__(self):
-        return u'%s' % self.slug
+        return self.slug
 
 
 class Sticky(models.Model):
@@ -37,7 +37,7 @@ class Sticky(models.Model):
     objects = models.GeoManager()
 
     def __unicode__(self):
-        return u'%s' % self.title
+        return self.title
 
     def add_tags(self, slugs):
         """add tags to sticky
