@@ -13,7 +13,7 @@ TEMPLATE_DEBUG = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.spatialite',
-        'NAME': os.path.join(BUILDOUT_DIR, 'test.db')
+        'NAME': os.path.join(BUILDOUT_DIR, 'var', 'sqlite', 'test.db')
     },
 }
 SITE_ID = 1
