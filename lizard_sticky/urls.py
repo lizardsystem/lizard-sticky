@@ -23,5 +23,6 @@ if getattr(settings, 'LIZARD_STICKY_STANDALONE', False):
     urlpatterns += patterns(
         '',
         (r'^map/', include('lizard_map.urls')),
+        (r'^ui/', include('lizard_ui.urls')),
         (r'^admin/', include(admin.site.urls)),
     )
