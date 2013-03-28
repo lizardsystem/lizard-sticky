@@ -5,7 +5,9 @@ Changelog of lizard-sticky
 1.14 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Moved to github: https://github.com/lizardsystem/lizard-sticky.
+
+
 
 
 1.13 (2012-12-19)
@@ -40,6 +42,7 @@ Changelog of lizard-sticky
 
 - Require latest lizard-map (3.8).
 
+
 1.9 (2011-11-11)
 ----------------
 
@@ -48,7 +51,7 @@ Changelog of lizard-sticky
 - Changed views to classes to work with latest lizard-map. Updated
   templates to reflect this.
 
-- Changed setup.py to require at least the currently latest 
+- Changed setup.py to require at least the currently latest
   lizard-map (3.4.2) and lizard-ui (3.7).
 
 - Added dependency of map >= 1.60.
