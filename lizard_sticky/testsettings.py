@@ -9,8 +9,12 @@ STATICFILES_FINDERS = STATICFILES_FINDERS
 
 DEBUG = True
 TEMPLATE_DEBUG = True
-DATABASE_ENGINE = 'sqlite3'
-DATABASE_NAME = 'test.db'
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.spatialite',
+        'NAME': os.path.join(BUILDOUT_DIR, 'test.db')
+    },
+}
 SITE_ID = 1
 INSTALLED_APPS = [
     'lizard_sticky',
