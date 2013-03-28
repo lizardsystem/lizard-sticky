@@ -7,7 +7,8 @@ Changelog of lizard-sticky
 
 - Moved to github: https://github.com/lizardsystem/lizard-sticky.
 
-
+- **Upgrade warning**: south migrations added. For existing sites, you'll need
+  a ``bin/django migrate --fake lizard_sticky 0001``.
 
 
 1.13 (2012-12-19)
