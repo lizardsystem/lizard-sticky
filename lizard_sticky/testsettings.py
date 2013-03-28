@@ -1,3 +1,4 @@
+# (c) Nelen & Schuurmans.  GPL licensed, see LICENSE.txt.
 import os
 from lizard_ui.settingshelper import setup_logging
 from lizard_ui.settingshelper import STATICFILES_FINDERS

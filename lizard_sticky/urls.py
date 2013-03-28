@@ -1,3 +1,6 @@
+# (c) Nelen & Schuurmans.  GPL licensed, see LICENSE.txt.
+from __future__ import print_function
+from __future__ import unicode_literals
 from django.conf import settings
 from django.conf.urls.defaults import include
 from django.conf.urls.defaults import patterns

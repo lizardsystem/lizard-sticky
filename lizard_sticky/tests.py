@@ -1,3 +1,6 @@
+# (c) Nelen & Schuurmans.  GPL licensed, see LICENSE.txt.
+from __future__ import print_function
+from __future__ import unicode_literals
 from django.contrib.gis.utils import add_srs_entry
 from django.core.urlresolvers import reverse
 from django.test import TestCase
