@@ -1,4 +1,11 @@
 import os
+from lizard_ui.settingshelper import setup_logging
+from lizard_ui.settingshelper import STATICFILES_FINDERS
+
+SETTINGS_DIR = os.path.dirname(os.path.realpath(__file__))
+BUILDOUT_DIR = os.path.abspath(os.path.join(SETTINGS_DIR, '..'))
+LOGGING = setup_logging(BUILDOUT_DIR)
+STATICFILES_FINDERS = STATICFILES_FINDERS
 
 DEBUG = True
 TEMPLATE_DEBUG = True
@@ -9,6 +16,7 @@ INSTALLED_APPS = [
     'lizard_sticky',
     'lizard_map',
     'lizard_ui',
+    'lizard_security',
     'compressor',
     'staticfiles',
     'django_nose',
@@ -25,9 +33,15 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 # Used for django-staticfiles
 STATIC_URL = '/static_media/'
-SETTINGS_DIR = os.path.dirname(os.path.realpath(__file__))
-BUILDOUT_DIR = os.path.abspath(os.path.join(SETTINGS_DIR, '..'))
 STATIC_ROOT = os.path.join(BUILDOUT_DIR, 'var', 'static')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BUILDOUT_DIR, 'var', 'media')
+ADMIN_MEDIA_PREFIX = '/static_media/admin/'
+LANGUAGES = (
+    ('nl', 'Nederlands'),
+    ('en', 'English'),
+    )
+USE_TZ = True
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     # Default items.
