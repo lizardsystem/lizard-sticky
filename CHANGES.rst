@@ -2,8 +2,8 @@ Changelog of lizard-sticky
 ===================================================
 
 
-1.14 (unreleased)
------------------
+2.0 (2013-03-28)
+----------------
 
 - Moved to github: https://github.com/lizardsystem/lizard-sticky.
 
