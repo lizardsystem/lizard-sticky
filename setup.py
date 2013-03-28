@@ -17,6 +17,10 @@ install_requires = [
     ],
 
 tests_require = [
+    'nose',
+    'coverage',
+    # 'factory_boy',
+    # 'mock',
     ]
 
 setup(name='lizard-sticky',
