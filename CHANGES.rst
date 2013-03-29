@@ -5,7 +5,8 @@ Changelog of lizard-sticky
 2.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Beautified the admin interface: showing more columns in the list interface
+  and allowing filtering on tag.
 
 
 2.0 (2013-03-28)
