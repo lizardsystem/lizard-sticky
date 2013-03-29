@@ -5,5 +5,11 @@ from django.contrib.gis import admin
 from lizard_sticky.models import Sticky, Tag
 
 
-admin.site.register(Sticky, admin.GeoModelAdmin)
+class StickyAdmin(admin.GeoModelAdmin):
+    list_display = ['title', 'reporter', 'tags_for_admin']
+    search_fields = ['title', 'reporter', 'description',]
+    list_filter = ('tags', )
+
+
+admin.site.register(Sticky, StickyAdmin)
 admin.site.register(Tag)

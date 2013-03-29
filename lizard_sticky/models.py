@@ -36,6 +36,9 @@ class Sticky(models.Model):
     geom = models.PointField()  # default srid 4326
     objects = models.GeoManager()
 
+    def tags_for_admin(self):
+        return ', '.join([tag.slug for tag in self.tags.all()])
+
     def __unicode__(self):
         return self.title
 
