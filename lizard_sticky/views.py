@@ -1,11 +1,11 @@
 # (c) Nelen & Schuurmans.  GPL licensed, see LICENSE.txt.
 from __future__ import print_function
 from __future__ import unicode_literals
-from django.http import HttpResponse
 
+from django.http import HttpResponse
+from lizard_map import coordinates
 from lizard_map.views import AppView
 
-from lizard_map import coordinates
 from lizard_sticky.models import Sticky
 from lizard_sticky.models import Tag
 
