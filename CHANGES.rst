@@ -2,7 +2,7 @@ Changelog of lizard-sticky
 ===================================================
 
 
-2.1 (unreleased)
+2.1 (2013-03-29)
 ----------------
 
 - Beautified the admin interface: showing more columns in the list interface
